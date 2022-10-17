@@ -1,0 +1,81 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+}
+
+.menuList{
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    list-style: none;
+}
+
+.categorysContainer{
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    max-height: 600px;
+    overflow: scroll;
+    width: 100%;
+    gap:40px;
+}
+
+@media (min-height: 1000px) {
+    .categorysContainer {
+        max-height: 756px;
+    }
+  }
+  
+
+.categorysContainer::-webkit-scrollbar {
+    width: 8px;
+    height: 0px;
+    background-color: #2F2F37;
+}
+
+.categorysContainer::-webkit-scrollbar-thumb {
+    background-color: #8585AD;
+    
+}
+
+.categoryContainer{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.ingredientsContainer{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap:32px 24px;
+    box-sizing: border-box;
+}
+
+/* .burgerIngredient{
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 272px;
+    gap: 4px;
+    box-sizing: border-box;
+
+}
+
+.image{
+    max-width: 240px;
+}
+
+.priceBlock {
+    display: flex;
+    align-items: center;
+}
+
+.titleItem{
+    text-align: center;
+}
+ */
