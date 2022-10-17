@@ -8,23 +8,21 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { ingredientPropType } from "../../utils/prop-types.js";
 
-export default function BurgerIngredients(props) {
+export default function BurgerIngredients({data}) {
   const [current, setCurrent] = React.useState("bun");
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
-  const [ingridientsDetail, setIngridientsDetail] = React.useState([]);
+  const [ingredientDetail, setIngredientDetail] = React.useState([]);
 
-  const closeAllModals = () => {
+  const closeIngredientModal = () => {
     setIsOrderDetailsOpened(false);
   };
 
-  const handleEscKeydown = (e) => {
-    e.key === "Escape" && closeAllModals();
-  };
 
   const bunRef = React.useRef(null);
   const mainRef = React.useRef(null);
   const sauceRef = React.useRef(null);
 
+  
   useEffect(() => {
     switch (current) {
       case "bun":
@@ -36,33 +34,30 @@ export default function BurgerIngredients(props) {
       case "sauce":
         sauceRef && sauceRef.current.scrollIntoView({ behavior: "smooth" });
         break;
-      default:
-        break;
+        //no default
     }
   }, [current]);
 
-  const massiveBun = [];
-  const massiveMain = [];
-  const massiveSauce = [];
-  props.data.forEach((item) => {
-    switch (item.type) {
-      case "bun":
-        massiveBun.push(item);
-        break;
-      case "main":
-        massiveMain.push(item);
-        break;
-      case "sauce":
-        massiveSauce.push(item);
-        break;
-      default:
-        break;
-    }
-  });
 
-  function openDetailIngridients(e) {
-    setIngridientsDetail(
-      props.data.find((item) => item._id === e.currentTarget.id)
+
+  const {buns,mains,sauces}  = React.useMemo(
+    () =>{ return data.reduce(( acc, ingredient )  => {
+      switch (ingredient.type) {
+        case "bun":
+          return {...acc, buns: [...acc.buns, ingredient]};
+        case "main":
+          return {...acc, mains: [...acc.mains, ingredient]};
+        case "sauce":
+          return {...acc, sauces: [...acc.sauces, ingredient]};
+        default:
+          return {...acc};
+      }; }, { buns:[], mains: [], sauces: [] });},
+    [data]
+  );
+ 
+  function openDetailIngredients(e) {
+    setIngredientDetail(
+      data.find((item) => item._id === e.currentTarget.id)
     );
     setIsOrderDetailsOpened(true);
   }
@@ -98,13 +93,13 @@ export default function BurgerIngredients(props) {
           <div
             className={`${burgerIngredients.ingredientsContainer} pt-1 pr-2 pl-4 pb-5`}
           >
-            {massiveBun.map((item, index) => {
+            {buns.map((item, index) => {
               return (
                 <BurgerIngredient
                   data={item}
-                  openDetailIngridients={openDetailIngridients}
+                  onClick={openDetailIngredients}
                   count={index === 0 ? 1 : 0}
-                  key={item._id}
+                  key={index}
                 />
               );
             })}
@@ -115,11 +110,11 @@ export default function BurgerIngredients(props) {
           <div
             className={`${burgerIngredients.ingredientsContainer} pt-1 pr-2 pl-4 pb-5`}
           >
-            {massiveSauce.map((item, index) => {
+            {sauces.map((item, index) => {
               return (
                 <BurgerIngredient
                   data={item}
-                  openDetailIngridients={openDetailIngridients}
+                  onClick={openDetailIngredients}
                   count={index === 3 ? 1 : 0}
                   key={item._id}
                 />
@@ -132,13 +127,13 @@ export default function BurgerIngredients(props) {
           <div
             className={`${burgerIngredients.ingredientsContainer} pt-1 pr-2 pl-4 pb-5`}
           >
-            {massiveMain.map((item, index) => {
+            {mains.map((item, index) => {
               return (
                 <BurgerIngredient
                   data={item}
-                  openDetailIngridients={openDetailIngridients}
+                  onClick={openDetailIngredients}
                   count={index === 4 ? 1 : 0}
-                  key={item._id}
+                  key={index}
                 />
               );
             })}
@@ -148,10 +143,9 @@ export default function BurgerIngredients(props) {
       {isOrderDetailsOpened && (
         <Modal
           title="Детали ингредиента"
-          onOverlayClick={closeAllModals}
-          onEscKeydown={handleEscKeydown}
+          closeAllModals={closeIngredientModal}
         >
-          <IngredientDetails data={ingridientsDetail} />
+          <IngredientDetails data={ingredientDetail} />
         </Modal>
       )}
     </section>
@@ -159,5 +153,5 @@ export default function BurgerIngredients(props) {
 }
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(ingredientPropType.isRequired),
+  data: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
 };

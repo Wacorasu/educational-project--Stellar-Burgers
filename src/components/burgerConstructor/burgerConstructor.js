@@ -11,20 +11,21 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ingredientPropType } from "../../utils/prop-types.js";
 
-export default function BurgerConstructor(props) {
-  const massiveBun = [];
-  props.data.forEach((item) => {
-    item.type === "bun" && massiveBun.push(item);
-  });
+export default function BurgerConstructor({ data }) {
+  const buns = React.useMemo(
+    () => data.filter((ingredient) => ingredient.type === "bun"),
+    [data]
+  );
+
+  const ingredients = React.useMemo(
+    () => data.filter((ingredient) => ingredient.type !== "bun"),
+    [data]
+  );
 
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
 
-  const closeAllModals = () => {
+  const closeDetailOrder = () => {
     setIsOrderDetailsOpened(false);
-  };
-
-  const handleEscKeydown = (e) => {
-    e.key === "Escape" && closeAllModals();
   };
 
   function openDetailOrder() {
@@ -39,32 +40,29 @@ export default function BurgerConstructor(props) {
             <ConstructorElement
               type="top"
               isLocked={true}
-              text={massiveBun[0].name}
-              price={massiveBun[0].price}
-              thumbnail={massiveBun[0].image}
+              text={`${buns[0].name} (вверх)`}
+              price={buns[0].price}
+              thumbnail={buns[0].image}
             />
           </li>
           <li className={`${burgerConstructor.constructorBetweenBuns} pr-2`}>
             <ul className={`${burgerConstructor.constructorBetweenBunsList}`}>
-              {props.data.map((item) => {
-                if (item.type === "main" || item.type === "sauce") {
-                  return (
-                    <li
-                      className={burgerConstructor.constructorIngredients}
-                      key={item._id}
-                    >
-                      <DragIcon type="secondary" />
-                      <ConstructorElement
-                        isLocked={false}
-                        text={item.name}
-                        price={item.price}
-                        thumbnail={item.image}
-                        key={item._id}
-                      />
-                    </li>
-                  );
-                }
-                return "";
+              {ingredients.map((item, index) => {
+                return (
+                  <li
+                    className={burgerConstructor.constructorIngredients}
+                    key={item._id}
+                  >
+                    <DragIcon type="secondary" />
+                    <ConstructorElement
+                      isLocked={false}
+                      text={item.name}
+                      price={item.price}
+                      thumbnail={item.image}
+                      key={index}
+                    />
+                  </li>
+                );
               })}
             </ul>
           </li>
@@ -72,9 +70,9 @@ export default function BurgerConstructor(props) {
             <ConstructorElement
               type="bottom"
               isLocked={true}
-              text={massiveBun[1].name}
-              price={massiveBun[1].price}
-              thumbnail={massiveBun[1].image}
+              text={`${buns[1].name} (низ)`}
+              price={buns[1].price}
+              thumbnail={buns[1].image}
             />
           </li>
         </ul>
@@ -84,17 +82,18 @@ export default function BurgerConstructor(props) {
           <p className="text text_type_main-large mr-2">610</p>
           <CurrencyIcon type="primary" />
         </div>
-        <Button type="primary" size="large" onClick={openDetailOrder} htmlType='button'>
+        <Button
+          type="primary"
+          size="large"
+          onClick={openDetailOrder}
+          htmlType="button"
+        >
           <p className="text text_type_main-small">Оформить заказ</p>
         </Button>
       </div>
       {isOrderDetailsOpened && (
-        <Modal
-          title=""
-          onOverlayClick={closeAllModals}
-          onEscKeydown={handleEscKeydown}
-        >
-          <OrderDetails/>
+        <Modal title="" closeAllModals={closeDetailOrder}>
+          <OrderDetails />
         </Modal>
       )}
     </section>
@@ -102,5 +101,5 @@ export default function BurgerConstructor(props) {
 }
 
 burgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(ingredientPropType.isRequired),
+  data: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
 };
