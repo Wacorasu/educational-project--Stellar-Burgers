@@ -4,11 +4,7 @@ import PropTypes from "prop-types";
 import Modal from "../modal/modal.js";
 import IngredientDetails from "../ingredientDetails/ingredientDetails.js";
 import BurgerIngredient from "../burgerIngredient/burgerIngredient.js";
-import {
-  Counter,
-  CurrencyIcon,
-  Tab,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { ingredientPropType } from "../../utils/prop-types.js";
 
@@ -104,7 +100,12 @@ export default function BurgerIngredients(props) {
           >
             {massiveBun.map((item, index) => {
               return (
-                <BurgerIngredient data={item} openDetailIngridients={openDetailIngridients} count={index === 0 ? 1 : 0}  key={item._id}/>
+                <BurgerIngredient
+                  data={item}
+                  openDetailIngridients={openDetailIngridients}
+                  count={index === 0 ? 1 : 0}
+                  key={item._id}
+                />
               );
             })}
           </div>
@@ -116,7 +117,12 @@ export default function BurgerIngredients(props) {
           >
             {massiveSauce.map((item, index) => {
               return (
-                <BurgerIngredient data={item} openDetailIngridients={openDetailIngridients} count={index === 3 ? 1 : 0}  key={item._id}/>
+                <BurgerIngredient
+                  data={item}
+                  openDetailIngridients={openDetailIngridients}
+                  count={index === 3 ? 1 : 0}
+                  key={item._id}
+                />
               );
             })}
           </div>
@@ -128,7 +134,12 @@ export default function BurgerIngredients(props) {
           >
             {massiveMain.map((item, index) => {
               return (
-                <BurgerIngredient data={item} openDetailIngridients={openDetailIngridients} count={index === 4 ? 1 : 0}  key={item._id}/>
+                <BurgerIngredient
+                  data={item}
+                  openDetailIngridients={openDetailIngridients}
+                  count={index === 4 ? 1 : 0}
+                  key={item._id}
+                />
               );
             })}
           </div>
