@@ -9,16 +9,14 @@ const modalsContainer = document.querySelector("#modals");
 
 export default function Modal({ title, children, closeAllModals }) {
   useEffect(() => {
+    const onEscKeydown = (e) => {
+      e.key === "Escape" && closeAllModals();
+    };
     document.addEventListener("keydown", onEscKeydown);
-
     return () => {
       document.removeEventListener("keydown", onEscKeydown);
     };
   }, []);
-
-  const onEscKeydown = (e) => {
-    e.key === "Escape" && closeAllModals();
-  };
 
   return ReactDOM.createPortal(
     <>

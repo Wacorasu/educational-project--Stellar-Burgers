@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import Modal from "../modal/modal.js";
 import IngredientDetails from "../ingredientDetails/ingredientDetails.js";
-import BurgerIngredient from "../burgerIngredient/burgerIngredient.js";
+import {BurgerIngredient} from "../burgerIngredient/burgerIngredient.js";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { ingredientPropType } from "../../utils/prop-types.js";
@@ -11,10 +11,11 @@ import { ingredientPropType } from "../../utils/prop-types.js";
 export default function BurgerIngredients({data}) {
   const [current, setCurrent] = React.useState("bun");
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
-  const [ingredientDetail, setIngredientDetail] = React.useState([]);
+  const [ingredientDetail, setIngredientDetail] = React.useState(null);
 
   const closeIngredientModal = () => {
     setIsOrderDetailsOpened(false);
+    setIngredientDetail(null);
   };
 
 

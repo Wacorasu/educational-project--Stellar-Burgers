@@ -10,9 +10,7 @@ import { ingredientPropType } from "../../utils/prop-types.js";
 
 
 
-export default function BurgerIngredient({ data, onClick, count }) {
-  const render = React.useMemo(
-    () => {
+export const BurgerIngredient= React.memo(function BurgerIngredient({ data, onClick, count }) {
       return (
         <div
           className={`${burgerIngredient.burgerIngredient}`}
@@ -36,13 +34,7 @@ export default function BurgerIngredient({ data, onClick, count }) {
           </h3>
         </div>
       );
-    },
-    [data, onClick, count]
-  );
-  return(
-    render
-  )
-}
+});
 
 BurgerIngredient.propTypes = {
   data: ingredientPropType.isRequired,

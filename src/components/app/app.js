@@ -16,7 +16,7 @@ export default function App() {
     const getData = () => {
       setState({ ...state, isLoading: true });
       fetch(`${BURGER_API_URL}/ingredients`)
-        .then((res) => checkResponse(res))
+        .then(checkResponse)
         .then((resData) => {
           setState((prevState)=>({ ...prevState, data: resData.data, isLoading: false }));
         })

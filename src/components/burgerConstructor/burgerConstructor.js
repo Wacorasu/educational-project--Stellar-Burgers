@@ -12,8 +12,8 @@ import {
 import { ingredientPropType } from "../../utils/prop-types.js";
 
 export default function BurgerConstructor({ data }) {
-  const buns = React.useMemo(
-    () => data.filter((ingredient) => ingredient.type === "bun"),
+  const bun = React.useMemo(
+    () => data.find((ingredient) => ingredient.type === "bun"),
     [data]
   );
 
@@ -40,9 +40,9 @@ export default function BurgerConstructor({ data }) {
             <ConstructorElement
               type="top"
               isLocked={true}
-              text={`${buns[0].name} (вверх)`}
-              price={buns[0].price}
-              thumbnail={buns[0].image}
+              text={`${bun.name} (вверх)`}
+              price={bun.price}
+              thumbnail={bun.image}
             />
           </li>
           <li className={`${burgerConstructor.constructorBetweenBuns} pr-2`}>
@@ -70,9 +70,9 @@ export default function BurgerConstructor({ data }) {
             <ConstructorElement
               type="bottom"
               isLocked={true}
-              text={`${buns[1].name} (низ)`}
-              price={buns[1].price}
-              thumbnail={buns[1].image}
+              text={`${bun.name} (низ)`}
+              price={bun.price}
+              thumbnail={bun.image}
             />
           </li>
         </ul>
