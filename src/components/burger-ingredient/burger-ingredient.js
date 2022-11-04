@@ -1,4 +1,4 @@
-import burgerIngredient from "./burgerIngredient.module.css";
+import burgerIngredient from "./burger-ingredient.module.css";
 import React from "react";
 import PropTypes from "prop-types";
 import {

@@ -1,9 +1,10 @@
 import app from "./app.module.css";
 import React, { useEffect } from "react";
 import { BURGER_API_URL, checkResponse } from "../../utils/api.js";
-import AppHeader from "../appHeader/appHeader.js";
-import BurgerIngredients from "../burgerIngredients/burgerIngredients.js";
-import BurgerConstructor from "../burgerConstructor/burgerConstructor.js";
+import AppHeader from "../app-header/app-header.js";
+import BurgerIngredients from "../burger-ingredients/burger-ingredients.js";
+import BurgerConstructor from "../burger-constructor/burger-constructor.js";
+import {BurgerIngredientsContext} from '../../context/burger-ingredients-context';
 
 export default function App() {
   const [state, setState] = React.useState({
@@ -30,14 +31,16 @@ export default function App() {
       <AppHeader />
       <main className={`${app.content} pl-5 pr-5 mt-5`}>
         <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>
+        <BurgerIngredientsContext.Provider value={state.data}>
         <article className={app.constructorContainer}>
           {state.data && (
             <>
-              <BurgerIngredients data={state.data} />
-              <BurgerConstructor data={state.data} />
+              <BurgerIngredients/>
+              <BurgerConstructor/>
             </>
           )}
         </article>
+        </BurgerIngredientsContext.Provider>
       </main>
     </div>
   );

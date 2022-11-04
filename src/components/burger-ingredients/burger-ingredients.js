@@ -1,17 +1,18 @@
-import burgerIngredients from "./burgerIngredients.module.css";
+import burgerIngredients from "./burger-ingredients.module.css";
 import React, { useEffect } from "react";
-import PropTypes from "prop-types";
 import Modal from "../modal/modal.js";
-import IngredientDetails from "../ingredientDetails/ingredientDetails.js";
-import {BurgerIngredient} from "../burgerIngredient/burgerIngredient.js";
+import IngredientDetails from "../ingredient-details/ingredient-details.js";
+import {BurgerIngredient} from "../burger-ingredient/burger-ingredient.js";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
+import {BurgerIngredientsContext} from '../../context/burger-ingredients-context';
 
-import { ingredientPropType } from "../../utils/prop-types.js";
 
-export default function BurgerIngredients({data}) {
+export default function BurgerIngredients() {
   const [current, setCurrent] = React.useState("bun");
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
   const [ingredientDetail, setIngredientDetail] = React.useState(null);
+
+  const data = React.useContext(BurgerIngredientsContext);
 
   const closeIngredientModal = () => {
     setIsOrderDetailsOpened(false);
@@ -88,7 +89,7 @@ export default function BurgerIngredients({data}) {
           </li>
         </ul>
       </nav>
-      <div className={`${burgerIngredients.categorysContainer} mt-5`}>
+      <div className={`${burgerIngredients.categoriesContainer} mt-5`}>
         <div className={burgerIngredients.categoryContainer} ref={bunRef}>
           <h2 className="text text_type_main-medium mb-5">Булки</h2>
           <div
@@ -153,6 +154,4 @@ export default function BurgerIngredients({data}) {
   );
 }
 
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
-};
+

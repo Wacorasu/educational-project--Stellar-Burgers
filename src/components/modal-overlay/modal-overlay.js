@@ -1,4 +1,4 @@
-import modalOverlay from "./modalOverlay.module.css";
+import modalOverlay from "./modal-overlay.module.css";
 import React from "react";
 import PropTypes from "prop-types";
 
