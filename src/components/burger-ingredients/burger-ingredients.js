@@ -4,7 +4,7 @@ import Modal from "../modal/modal.js";
 import IngredientDetails from "../ingredient-details/ingredient-details.js";
 import {BurgerIngredient} from "../burger-ingredient/burger-ingredient.js";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import {BurgerIngredientsContext} from '../../context/burger-ingredients-context';
+import {BurgerIngredientsContext } from "../../services/burger-context";
 
 
 export default function BurgerIngredients() {

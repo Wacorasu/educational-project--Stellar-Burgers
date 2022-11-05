@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 
 const modalsContainer = document.querySelector("#modals");
 
-export default function Modal({ title, children, closeAllModals }) {
+export default function Modal({ title='', children, closeAllModals }) {
   useEffect(() => {
     const onEscKeydown = (e) => {
       e.key === "Escape" && closeAllModals();
@@ -36,7 +36,7 @@ export default function Modal({ title, children, closeAllModals }) {
 }
 
 Modal.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   closeAllModals: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
 };
