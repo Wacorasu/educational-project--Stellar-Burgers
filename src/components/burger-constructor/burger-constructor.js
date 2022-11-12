@@ -36,7 +36,7 @@ export default function BurgerConstructor() {
 
   const sendOrder = () => {
     setOrderInfo({ ...orderInfo, isLoading: true });
-      getOrder(ingredientsState.ingredients)
+      getOrder([...ingredientsState.ingredients, ingredientsState.bun])
       .then(checkResponse)
       .then((resData) => {
         setOrderInfo({ ...orderInfo, data: resData, isLoading: false });
@@ -60,7 +60,7 @@ export default function BurgerConstructor() {
   const getTotalPrice = React.useMemo(
     () =>
       {
-        return `${ingredientsState.bun?.price + ingredientsState.ingredients.reduce((preItem, item) => {
+        return `${ingredientsState.bun?.price*2 + ingredientsState.ingredients.reduce((preItem, item) => {
         return preItem + item.price;
       }, 0)}`},
     [ingredientsState]
