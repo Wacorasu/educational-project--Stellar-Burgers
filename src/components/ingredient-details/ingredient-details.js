@@ -1,4 +1,4 @@
-import ingredientDetails from "./ingredientDetails.module.css";
+import ingredientDetails from "./ingredient-details.module.css";
 import React from "react";
 import { ingredientPropType } from "../../utils/prop-types.js";
 
@@ -14,8 +14,8 @@ export default function IngredientDetails({ data }) {
       <h3 className={`${ingredientDetails.title} text text_type_main-medium`}>
         {name}
       </h3>
-      <div className={ingredientDetails.modalIngridientsInfoContainers}>
-        <div className={ingredientDetails.modalIngridientsInfoContainer}>
+      <div className={ingredientDetails.modalIngredientsInfoContainers}>
+        <div className={ingredientDetails.modalIngredientsInfoContainer}>
           <p className="text text_type_main-small text_color_inactive">
             Калории,ккал
           </p>
@@ -23,7 +23,7 @@ export default function IngredientDetails({ data }) {
             {calories}
           </p>
         </div>
-        <div className={ingredientDetails.modalIngridientsInfoContainer}>
+        <div className={ingredientDetails.modalIngredientsInfoContainer}>
           <p className="text text_type_main-small text_color_inactive">
             Белки, г
           </p>
@@ -31,13 +31,13 @@ export default function IngredientDetails({ data }) {
             {proteins}
           </p>
         </div>
-        <div className={ingredientDetails.modalIngridientsInfoContainer}>
+        <div className={ingredientDetails.modalIngredientsInfoContainer}>
           <p className="text text_type_main-small text_color_inactive">
             Жиры, г
           </p>
           <p className="text text_type_main-small text_color_inactive">{fat}</p>
         </div>
-        <div className={ingredientDetails.modalIngridientsInfoContainer}>
+        <div className={ingredientDetails.modalIngredientsInfoContainer}>
           <p className="text text_type_main-small text_color_inactive">
             Углеводы, г
           </p>

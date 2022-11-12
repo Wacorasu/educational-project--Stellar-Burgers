@@ -12,7 +12,7 @@
     list-style: none;
 }
 
-.categorysContainer{
+.categoriesContainer{
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
@@ -23,19 +23,19 @@
 }
 
 @media (min-height: 1000px) {
-    .categorysContainer {
+    .categoriesContainer {
         max-height: 756px;
     }
   }
   
 
-.categorysContainer::-webkit-scrollbar {
+.categoriesContainer::-webkit-scrollbar {
     width: 8px;
     height: 0px;
     background-color: #2F2F37;
 }
 
-.categorysContainer::-webkit-scrollbar-thumb {
+.categoriesContainer::-webkit-scrollbar-thumb {
     background-color: #8585AD;
     
 }

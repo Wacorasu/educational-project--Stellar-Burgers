@@ -11,14 +11,14 @@
     height: 100%;
 }
 
-.modalIngridientsInfoContainers {
+.modalIngredientsInfoContainers {
     margin-top: 32px;
     display: flex;
     width: 100%;
     gap: 20px;
 }
 
-.modalIngridientsInfoContainer{
+.modalIngredientsInfoContainer{
     display: flex;
     flex-direction: column;
     align-items: center;
