@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 
 const modalsContainer = document.querySelector("#modals");
 
-export default function Modal({ title='', children, closeAllModals }) {
+export default function Modal({ title = "", children, closeAllModals }) {
   useEffect(() => {
     const onEscKeydown = (e) => {
       e.key === "Escape" && closeAllModals();

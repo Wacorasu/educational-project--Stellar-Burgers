@@ -1,0 +1,10 @@
+.constructorBun {
+    width: 100%;
+    max-width: 524px;
+    
+  }
+
+  .onHover{
+    border: 3px solid rgba(139, 230, 35, 0.5);
+    border-radius: 20px;
+  }
