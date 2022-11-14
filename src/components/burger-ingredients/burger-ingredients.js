@@ -9,6 +9,7 @@ import {
   CLOSE_DETAIL_INGREDIENTS,
   OPEN_DETAIL_INGREDIENTS,
 } from "../../services/actions/ingredient-details";
+import {tabSwitchInterval} from '../../utils/constants'
 
 export default function BurgerIngredients() {
   const [current, setCurrent] = React.useState("bun");
@@ -45,21 +46,21 @@ export default function BurgerIngredients() {
   const handlerScroll = (e) => {
     if (
       mainRef.current?.getBoundingClientRect().top <
-        navRef.current?.getBoundingClientRect().bottom + 30 &&
+        navRef.current?.getBoundingClientRect().bottom + tabSwitchInterval &&
       mainRef.current?.getBoundingClientRect().top >
         navRef.current?.getBoundingClientRect().bottom
     ) {
       setCurrentTab("main");
     } else if (
       bunRef.current?.getBoundingClientRect().top <
-        navRef.current?.getBoundingClientRect().bottom + 30 &&
+        navRef.current?.getBoundingClientRect().bottom + tabSwitchInterval &&
       bunRef.current?.getBoundingClientRect().top >
         navRef.current?.getBoundingClientRect().bottom
     ) {
       setCurrentTab("bun");
     } else if (
       sauceRef.current?.getBoundingClientRect().top <
-        navRef.current?.getBoundingClientRect().bottom + 30 &&
+        navRef.current?.getBoundingClientRect().bottom + tabSwitchInterval &&
       sauceRef.current?.getBoundingClientRect().top >
         navRef.current?.getBoundingClientRect().bottom
     ) {
@@ -140,7 +141,7 @@ export default function BurgerIngredients() {
                   data={item}
                   onClick={openDetailIngredients}
                   count={item.count}
-                  key={index}
+                  key={item._id}
                 />
               );
             })}
@@ -178,7 +179,7 @@ export default function BurgerIngredients() {
                   data={item}
                   onClick={openDetailIngredients}
                   count={item.count}
-                  key={index}
+                  key={item._id}
                 />
               );
             })}

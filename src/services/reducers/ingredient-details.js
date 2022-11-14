@@ -5,7 +5,7 @@ import {
 
 const initialState = {
   isOpened: false,
-  ingredientDetails: {},
+  ingredientDetails: null,
 };
 
 export const ingredientDetailReducer = (state = initialState, action) => {
@@ -14,7 +14,7 @@ export const ingredientDetailReducer = (state = initialState, action) => {
       return { ...state, isOpened: true, ingredientDetails: action.data };
     }
     case CLOSE_DETAIL_INGREDIENTS: {
-      return { ...state, isOpened: false, ingredientDetails: {} };
+      return { ...state, isOpened: false, ingredientDetails: null };
     }
     default:
       return state;

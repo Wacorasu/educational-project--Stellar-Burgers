@@ -1,8 +1,7 @@
 .constructorIngredients {
-    width: 100%;
-    max-width: 568px;
-    display: flex;
-    align-items: center;
-    gap: 13.5px;
-  }
-  
+  width: 100%;
+  max-width: 568px;
+  display: flex;
+  align-items: center;
+  gap: 13.5px;
+}

@@ -7,7 +7,7 @@ import {
 
 const initialState = {
   bun: null,
-  ingredients: [],
+  ingredients: null,
 };
 
 export const burgerConstructorReducer = (state = initialState, action) => {
@@ -18,7 +18,7 @@ export const burgerConstructorReducer = (state = initialState, action) => {
       } else {
         return {
           ...state,
-          ingredients: [...state.ingredients, action.payload],
+          ingredients: state.ingredients ? [...state.ingredients, action.payload] : [action.payload],
         };
       }
     }

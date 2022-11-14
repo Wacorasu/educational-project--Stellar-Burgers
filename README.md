@@ -22,3 +22,5 @@
 - jsx
 - react
 - webpack
+- react-redux
+- react-dnd

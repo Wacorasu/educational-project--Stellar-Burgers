@@ -1,5 +1,5 @@
 import burgerConstructor from "./burger-constructor.module.css";
-import React, {useCallback} from "react";
+import React, { useCallback } from "react";
 import OrderDetails from "../order-details/order-details.js";
 import Modal from "../modal/modal.js";
 import {
@@ -12,12 +12,12 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addToConstructor,
   CONSTRUCTOR_DELETE,
-  CONSTRUCTOR_REORDER
+  CONSTRUCTOR_REORDER,
 } from "../../services/actions/burger-constructor";
 import { INCREASE_COUNT, DECREASE_COUNT } from "../../services/actions/index";
 import { useDrop } from "react-dnd";
-import {ConstructorIngredients} from '../constructor-ingredients/constructor-ingredients'
-import {ConstructorBun} from '../constructor-bun/constructor-bun'
+import { ConstructorIngredients } from "../constructor-ingredients/constructor-ingredients";
+import { ConstructorBun } from "../constructor-bun/constructor-bun";
 
 export default function BurgerConstructor() {
   const orderData = useSelector((store) => store.orderDetail.data);
@@ -28,7 +28,9 @@ export default function BurgerConstructor() {
   const dispatch = useDispatch();
 
   const sendOrder = () => {
-    dispatch(createOrder([...constructorIngredients, constructorBun]));
+    dispatch(
+      createOrder([constructorBun, ...constructorIngredients, constructorBun])
+    );
     openDetailOrder();
   };
 
@@ -43,13 +45,12 @@ export default function BurgerConstructor() {
     setIsOrderDetailsOpened(true);
   }
 
-
   const [{ isAcceptZone }, dropIngredient] = useDrop({
     accept: ["main", "sauce"],
     collect: (monitor) => ({
       isAcceptZone: monitor.canDrop(),
     }),
-    drop:(item) =>{
+    drop: (item) => {
       dispatch(addToConstructor(item));
       dispatch({ type: INCREASE_COUNT, item: { ...item } });
     },
@@ -61,36 +62,41 @@ export default function BurgerConstructor() {
     dispatch({ type: DECREASE_COUNT, item: { ...removeItem } });
   };
 
- 
+  /* eslint-disable */ //TODO нет необходимсоти в зависимости от dispatch 
   const moveIngredients = useCallback((dragIndex, hoverIndex) => {
-      dispatch({type: CONSTRUCTOR_REORDER,
-        hoverIndex:hoverIndex,
-        dragIndex:dragIndex
-      })
-  }, [])
+    dispatch({
+      type: CONSTRUCTOR_REORDER,
+      hoverIndex: hoverIndex,
+      dragIndex: dragIndex,
+    });
+  }, []);
+  /* eslint-enable */
 
   const getTotalPrice = React.useMemo(() => {
-    return`${
-        (constructorBun ? constructorBun?.price : 0 )* 2  +
-          constructorIngredients?.reduce((preItem, item) => {
-            return preItem + item.price;
-          }, 0)
-        }`
-
+    return `${
+      (constructorBun ? constructorBun?.price : 0) * 2 +
+      (constructorIngredients ? constructorIngredients?.reduce((preItem, item) => {
+        return preItem + item.price;
+      }, 0) : 0)
+    }`;
   }, [constructorBun, constructorIngredients]);
 
   return (
     <section className={`${burgerConstructor.container} pt-5 pl-4 pr-4`}>
       <div className={`${burgerConstructor.constructorContainer} pb-5`}>
         <ul className={burgerConstructor.constructor}>
-          <ConstructorBun type={'top'}/>
-          <li className={`${burgerConstructor.constructorBetweenBuns} ${isAcceptZone ? burgerConstructor.onHover : ''} pr-2`}>
+          <ConstructorBun type={"top"} />
+          <li
+            className={`${burgerConstructor.constructorBetweenBuns} ${
+              isAcceptZone ? burgerConstructor.onHover : ""
+            } pr-2`}
+          >
             <ul
               ref={dropIngredient}
-              className={`${burgerConstructor.constructorBetweenBunsList} ` }
-              style={{border:'2, solid, blue'}}
+              className={`${burgerConstructor.constructorBetweenBunsList} `}
+              style={{ border: "2, solid, blue" }}
             >
-              {constructorIngredients.length === 0 && (
+              {!constructorIngredients && (
                 <li
                   className={
                     burgerConstructor.constructorIngredientsPlaceholder
@@ -105,12 +111,18 @@ export default function BurgerConstructor() {
               )}
               {constructorIngredients?.map((item, index) => {
                 return (
-                  <ConstructorIngredients ingredient={item} moveIngredients={moveIngredients} removeIngredient={removeIngredient} key={item.id} index={index}/>
+                  <ConstructorIngredients
+                    ingredient={item}
+                    moveIngredients={moveIngredients}
+                    removeIngredient={removeIngredient}
+                    key={item.id}
+                    index={index}
+                  />
                 );
               })}
             </ul>
           </li>
-          <ConstructorBun type={'bottom'}/>
+          <ConstructorBun type={"bottom"} />
         </ul>
       </div>
       <div className={`${burgerConstructor.orderContainer} pt-5 pr-4`}>
@@ -124,7 +136,7 @@ export default function BurgerConstructor() {
           onClick={sendOrder}
           htmlType="button"
           disabled={
-            !(constructorIngredients.length !== 0 && constructorBun)
+            !(constructorIngredients && constructorBun)
               ? true
               : false
           }

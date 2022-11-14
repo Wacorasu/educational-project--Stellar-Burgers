@@ -12,10 +12,11 @@ export default function App() {
   const data = useSelector((store) => store.allIngredients.data);
   const dispatch = useDispatch();
 
+  /* eslint-disable */ //TODO необходим запрос данным при монтировании компонента
   useEffect(() => {
     dispatch(getData());
   }, []);
-
+  /* eslint-enable */
   return (
     <div className={app.main}>
       <AppHeader />

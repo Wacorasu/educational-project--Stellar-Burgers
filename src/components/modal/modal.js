@@ -8,6 +8,8 @@ import PropTypes from "prop-types";
 const modalsContainer = document.querySelector("#modals");
 
 export default function Modal({ title = "", children, closeAllModals }) {
+  
+  /* eslint-disable */ //TODO необходимо выполнять при монтировании компонента 
   useEffect(() => {
     const onEscKeydown = (e) => {
       e.key === "Escape" && closeAllModals();
@@ -17,7 +19,8 @@ export default function Modal({ title = "", children, closeAllModals }) {
       document.removeEventListener("keydown", onEscKeydown);
     };
   }, []);
-
+/* eslint-disable */
+  
   return ReactDOM.createPortal(
     <>
       <div className={modal.container}>
