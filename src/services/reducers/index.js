@@ -9,6 +9,7 @@ import {
   INCREASE_COUNT,
   DECREASE_COUNT,
 } from "../actions/index";
+import {authDataReducer} from './auth-data'
 
 const initialState = {
   isLoading: false,
@@ -73,4 +74,5 @@ export const rootReducer = combineReducers({
   burgerConstructor: burgerConstructorReducer,
   ingredientDetail: ingredientDetailReducer,
   orderDetail: orderDetailReducer,
+  authData: authDataReducer,
 });

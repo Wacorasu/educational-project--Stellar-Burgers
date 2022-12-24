@@ -18,6 +18,8 @@ import { INCREASE_COUNT, DECREASE_COUNT } from "../../services/actions/index";
 import { useDrop } from "react-dnd";
 import { ConstructorIngredients } from "../constructor-ingredients/constructor-ingredients";
 import { ConstructorBun } from "../constructor-bun/constructor-bun";
+import { useHistory } from "react-router-dom";
+
 
 export default function BurgerConstructor() {
   const orderData = useSelector((store) => store.orderDetail.data);
@@ -26,12 +28,18 @@ export default function BurgerConstructor() {
   );
   const constructorBun = useSelector((store) => store.burgerConstructor.bun);
   const dispatch = useDispatch();
+  const { isAuth } = useSelector((store) => store.authData);
+  const history = useHistory();
 
   const sendOrder = () => {
+    if (isAuth) {
     dispatch(
       createOrder([constructorBun, ...constructorIngredients, constructorBun])
     );
     openDetailOrder();
+  } else {
+    history.push({pathname:'/login'})
+  }
   };
 
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);

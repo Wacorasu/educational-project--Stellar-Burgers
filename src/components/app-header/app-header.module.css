@@ -31,8 +31,13 @@
 .link {
     display: flex;
     text-decoration: none;
-    color: #fff;
+    color: #8585AD;
 }
+
+.activeLink{
+    color: #F2F2F3;
+}
+
  .logo {
     position: absolute;
     left: calc(100%/2 - 290px/2);
