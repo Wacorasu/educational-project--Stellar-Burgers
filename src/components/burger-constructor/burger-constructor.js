@@ -13,6 +13,7 @@ import {
   addToConstructor,
   CONSTRUCTOR_DELETE,
   CONSTRUCTOR_REORDER,
+  CONSTRUCTOR_RESET
 } from "../../services/actions/burger-constructor";
 import { INCREASE_COUNT, DECREASE_COUNT } from "../../services/actions/index";
 import { useDrop } from "react-dnd";
@@ -46,6 +47,7 @@ export default function BurgerConstructor() {
 
   const closeDetailOrder = () => {
     dispatch({ type: ORDER_RESET });
+    dispatch({type: CONSTRUCTOR_RESET})
     setIsOrderDetailsOpened(false);
   };
 

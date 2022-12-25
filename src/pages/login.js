@@ -9,7 +9,9 @@ import {
 import { getAuth } from "../services/actions/auth-data";
 
 export default function Login() {
-  const serverErrors = useSelector((store) => store.authData?.errors?.errorAuth);
+  const serverErrors = useSelector(
+    (store) => store.authData?.errors?.errorAuth
+  );
   const [formValue, setFormValue] = useState({
     email: "",
     password: "",
@@ -22,8 +24,8 @@ export default function Login() {
     inputPasswordErrorText: "",
   });
 
-const location= useLocation();
-   
+  const location = useLocation();
+
   const dispatch = useDispatch();
   const inputEmailRef = React.useRef(null);
   const inputPasswordRef = React.useRef(null);
@@ -104,7 +106,10 @@ const location= useLocation();
   return !isAuth ? (
     <section className={login.page}>
       <div className={`${login.loginContainer} pt-25`}>
-        <div className={`${login.inputContainer} mb-20`}>
+        <form
+          className={`${login.inputContainer} mb-20`}
+          onSubmit={handleLogin}
+        >
           <h2 className={`${login.title} text text_type_main-medium`}>Вход</h2>
           <Input
             placeholder={"E-mail"}
@@ -147,15 +152,10 @@ const location= useLocation();
             ref={inputPasswordRef}
             minLength={2}
           />
-          <Button
-            type="primary"
-            size="large"
-            htmlType="submit"
-            onClick={handleLogin}
-          >
+          <Button type="primary" size="large" htmlType="submit">
             Войти
           </Button>
-        </div>
+        </form>
         <p
           className={`${login.text} text text_type_main-default text_color_inactive mb-4`}
         >
@@ -177,7 +177,7 @@ const location= useLocation();
   ) : (
     <Redirect
       to={{
-        pathname: location.state?.from ? location.state.from.pathname : '/',
+        pathname: location.state?.from ? location.state.from.pathname : "/",
       }}
     />
   );

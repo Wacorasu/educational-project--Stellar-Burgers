@@ -10,7 +10,9 @@ import { getRegister } from "../services/actions/auth-data";
 
 export default function Register() {
   const history = useHistory();
-  const serverErrors = useSelector((store) => store.authData.errors.errorRegister);
+  const serverErrors = useSelector(
+    (store) => store.authData.errors.errorRegister
+  );
   const [formValue, setFormValue] = useState({
     name: "",
     email: "",
@@ -64,7 +66,6 @@ export default function Register() {
   );
 
   useEffect(() => {
-    
     if (serverErrors?.hasError && formValue.email) {
       setFormValue({
         ...formValue,
@@ -115,7 +116,10 @@ export default function Register() {
   return !isAuth ? (
     <section className={register.page}>
       <div className={`${register.registerContainer} pt-25`}>
-        <div className={`${register.inputContainer} mb-20`}>
+        <form
+          className={`${register.inputContainer} mb-20`}
+          onSubmit={handleRegister}
+        >
           <h2 className={`${register.title} text text_type_main-medium`}>
             Регистрация
           </h2>
@@ -169,21 +173,14 @@ export default function Register() {
             }
             minLength={2}
             onFocus={() => resetError()}
-            error={ formValue.inputPasswordError
-            }
-            errorText={formValue.inputPasswordText
-            }
+            error={formValue.inputPasswordError}
+            errorText={formValue.inputPasswordText}
             ref={inputPasswordRef}
           />
-          <Button
-            type="primary"
-            size="large"
-            htmlType="submit"
-            onClick={handleRegister}
-          >
+          <Button type="primary" size="large" htmlType="submit">
             Зарегистрироваться
           </Button>
-        </div>
+        </form>
         <p
           className={`${register.text} text text_type_main-default text_color_inactive mb-4`}
         >

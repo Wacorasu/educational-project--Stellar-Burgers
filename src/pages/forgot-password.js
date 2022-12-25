@@ -90,7 +90,10 @@ export default function ForgotPassword() {
   return !isAuth ? (
     <section className={forgotPassword.page}>
       <div className={`${forgotPassword.forgotPasswordContainer} pt-25`}>
-        <div className={`${forgotPassword.inputContainer} mb-20`}>
+        <form
+          className={`${forgotPassword.inputContainer} mb-20`}
+          onSubmit={handleReset}
+        >
           <h2 className={`${forgotPassword.title} text text_type_main-medium`}>
             Восстановление пароля
           </h2>
@@ -114,15 +117,10 @@ export default function ForgotPassword() {
             }
             ref={inputEmailRef}
           />
-          <Button
-            type="primary"
-            size="large"
-            onClick={handleReset}
-            htmlType="submit"
-          >
+          <Button type="primary" size="large" htmlType="submit">
             Восстановить
           </Button>
-        </div>
+        </form>
         <p
           className={`${forgotPassword.text} text text_type_main-default text_color_inactive mb-4`}
         >

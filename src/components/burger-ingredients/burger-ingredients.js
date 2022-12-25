@@ -2,10 +2,7 @@ import burgerIngredients from "./burger-ingredients.module.css";
 import React, { useEffect } from "react";
 import { BurgerIngredient } from "../burger-ingredient/burger-ingredient.js";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  OPEN_DETAIL_INGREDIENTS,
-} from "../../services/actions/ingredient-details";
+import { useSelector } from "react-redux";
 import { tabSwitchInterval } from "../../utils/constants";
 import { useLocation, useHistory } from "react-router-dom";
 
@@ -13,7 +10,6 @@ export default function BurgerIngredients() {
   const [current, setCurrent] = React.useState("bun");
   const [currentTab, setCurrentTab] = React.useState("bun");
 
-  const dispatch = useDispatch();
   const data = useSelector((store) => store.allIngredients.data);
   let location = useLocation();
   const history = useHistory();
@@ -82,14 +78,10 @@ export default function BurgerIngredients() {
   }, [data]);
 
   function openDetailIngredients(e) {
-    console.log(location);
-    dispatch({
-      type: OPEN_DETAIL_INGREDIENTS,
-      data: data.find((item) => item._id === e.currentTarget.id),
-    });
     history.push({
       pathname: `/ingredients/${e.currentTarget.id}`,
-      state: { background: location },
+      state: { background: location,
+      modalOpened: true },
     });
   }
  

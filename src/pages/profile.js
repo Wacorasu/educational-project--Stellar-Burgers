@@ -190,7 +190,10 @@ export default function Profile() {
 
       <Switch>
         <Route path="/profile/" exact>
-          <div className={`${profile.profileContainer}`}>
+          <form
+            className={`${profile.profileContainer}`}
+            onSubmit={handleUpdateUserData}
+          >
             <Input
               placeholder={"Имя"}
               value={formValue?.name}
@@ -272,21 +275,16 @@ export default function Profile() {
               <Button
                 type="secondary"
                 size="large"
-                htmlType="submit"
+                htmlType="button"
                 onClick={handleCancel}
               >
                 Отмена
               </Button>
-              <Button
-                type="primary"
-                size="large"
-                htmlType="submit"
-                onClick={handleUpdateUserData}
-              >
+              <Button type="primary" size="large" htmlType="submit">
                 Сохранить
               </Button>
             </div>
-          </div>
+          </form>
         </Route>
         <Route path="/profile/order-history" exact>
           <h2 className="text text_type_main-large">In progress</h2>

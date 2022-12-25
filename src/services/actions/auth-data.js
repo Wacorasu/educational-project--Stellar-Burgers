@@ -10,7 +10,7 @@ import {
   getServerRefreshToken,
   getServerUpdateUser
 } from "../../utils/auth-api";
-import { checkResponse } from "../../utils/api.js";
+
 
 export const AUTH_REQUEST = "AUTH_REQUEST";
 export const AUTH_REQUEST_SUCCESS = "AUTH_REQUEST_SUCCESS";
@@ -43,7 +43,6 @@ export const getAuth = (form) => (dispatch) => {
     type: AUTH_REQUEST,
   });
   return getServerAuth(form)
-    .then(checkResponse)
     .then((res) => {
       dispatch({
         type: AUTH_REQUEST_SUCCESS,
@@ -70,7 +69,6 @@ export const getUserData = () => (dispatch) => {
     type: USER_REQUEST,
   });
   return getServerUser()
-    .then(checkResponse)
     .then((res) => {
       dispatch({
         type: USER_REQUEST_SUCCESS,
@@ -92,7 +90,6 @@ export const sendUpdatedData = (form) => (dispatch) => {
     type: USER_UPDATE_REQUEST,
   });
   return getServerUpdateUser(form)
-    .then(checkResponse)
     .then((res) => {
       dispatch({
         type: USER_UPDATE_REQUEST_SUCCESS,
@@ -114,7 +111,6 @@ export const getLogout = () => (dispatch) => {
     type: LOGOUT_REQUEST,
   });
   return getServerLogout()
-    .then(checkResponse)
     .then((res) => {
       if (res.success){
         dispatch({
@@ -138,7 +134,6 @@ export const getRegister = (form) => (dispatch) => {
     type: REGISTER_REQUEST,
   });
   return getServerRegister(form)
-    .then(checkResponse)
     .then((res) => {
       dispatch({
         type: REGISTER_REQUEST_SUCCESS,
@@ -163,7 +158,6 @@ export const getResetPassword = (form) => (dispatch) => {
     type: RESET_PASSWORD_REQUEST,
   });
   return getServerResetPassword(form)
-    .then(checkResponse)
     .then((res) => {
       dispatch({
         type: RESET_PASSWORD_REQUEST_SUCCESS,
@@ -184,7 +178,6 @@ export const sendNewPassword = (form) => (dispatch) => {
     type: SEND_PASSWORD_REQUEST,
   });
   return getServerNewPassword(form)
-    .then(checkResponse)
     .then((res) => {
       dispatch({
         type: SEND_PASSWORD_REQUEST_SUCCESS,
@@ -205,7 +198,6 @@ export const getRefreshToken = () => (dispatch) => {
     type: REFRESH_TOKEN_REQUEST,
   });
   return getServerRefreshToken()
-    .then(checkResponse)
     .then((res) => {
       dispatch({
         type: REFRESH_TOKEN_REQUEST_SUCCESS,

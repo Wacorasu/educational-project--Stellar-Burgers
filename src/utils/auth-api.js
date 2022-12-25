@@ -1,8 +1,9 @@
 import { getCookie } from './cookie-api';
 import { BURGER_API_URL } from "./api.js";
+import { request } from './api.js';
 
 const getServerAuth = (form) => {
-    return fetch(`${BURGER_API_URL}/auth/login`, {
+    return request(`${BURGER_API_URL}/auth/login`, {
       method: 'POST',
       mode: 'cors',
       cache: 'no-cache',
@@ -17,7 +18,7 @@ const getServerAuth = (form) => {
   };
   
 const getServerUser = () =>
-    fetch(`${BURGER_API_URL}/auth/user`, {
+    request(`${BURGER_API_URL}/auth/user`, {
       method: 'GET',
       mode: 'cors',
       cache: 'no-cache',
@@ -31,7 +32,7 @@ const getServerUser = () =>
     });
   
   const getServerLogout = () => {
-    return fetch(`${BURGER_API_URL}/auth/logout`, {
+    return request(`${BURGER_API_URL}/auth/logout`, {
       method: 'POST',
       mode: 'cors',
       cache: 'no-cache',
@@ -47,7 +48,7 @@ const getServerUser = () =>
   };
 
   const getServerUpdateUser = (form) => {
-    return fetch(`${BURGER_API_URL}/auth/user`, {
+    return request(`${BURGER_API_URL}/auth/user`, {
       method: 'PATCH',
       mode: 'cors',
       cache: 'no-cache',
@@ -63,7 +64,7 @@ const getServerUser = () =>
   };
 
   const getServerRegister = (form) => {
-    return fetch(`${BURGER_API_URL}/auth/register`, {
+    return request(`${BURGER_API_URL}/auth/register`, {
       method: 'POST',
       mode: 'cors',
       cache: 'no-cache',
@@ -78,7 +79,7 @@ const getServerUser = () =>
   };
 
   const getServerResetPassword = (form) => {
-    return fetch(`${BURGER_API_URL}/password-reset`, {
+    return request(`${BURGER_API_URL}/password-reset`, {
       method: 'POST',
       mode: 'cors',
       cache: 'no-cache',
@@ -93,7 +94,7 @@ const getServerUser = () =>
   };
 
   const getServerNewPassword = (form) => {
-    return fetch(`${BURGER_API_URL}/password-reset/reset`, {
+    return request(`${BURGER_API_URL}/password-reset/reset`, {
       method: 'POST',
       mode: 'cors',
       cache: 'no-cache',
@@ -108,7 +109,7 @@ const getServerUser = () =>
   };
 
   const getServerRefreshToken = () => {
-    return fetch(`${BURGER_API_URL}/auth/token`, {
+    return request(`${BURGER_API_URL}/auth/token`, {
       method: 'POST',
       mode: 'cors',
       cache: 'no-cache',

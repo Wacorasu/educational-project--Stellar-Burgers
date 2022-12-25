@@ -81,7 +81,7 @@ export default function ResetPassword() {
 
   useEffect(() => {
     if (isAcceptPassword) {
-      dispatch({type: CLEAR_RESET_PASSWORD_REQUEST});
+      dispatch({ type: CLEAR_RESET_PASSWORD_REQUEST });
       history.replace({ pathname: "/login" });
     }
     // eslint-disable-next-line
@@ -114,7 +114,10 @@ export default function ResetPassword() {
   return !isAuth && isResetPassword ? (
     <section className={resetPassword.page}>
       <div className={`${resetPassword.resetPasswordContainer} pt-25`}>
-        <div className={`${resetPassword.inputContainer} mb-20`}>
+        <form
+          className={`${resetPassword.inputContainer} mb-20`}
+          onSubmit={handleSendPassword}
+        >
           <h2 className={`${resetPassword.title} text text_type_main-medium`}>
             Восстановление пароля
           </h2>
@@ -159,15 +162,10 @@ export default function ResetPassword() {
             ref={inputTokenRef}
             minLength={2}
           />
-          <Button
-            type="primary"
-            size="large"
-            htmlType="submit"
-            onClick={handleSendPassword}
-          >
+          <Button type="primary" size="large" htmlType="submit">
             Сохранить
           </Button>
-        </div>
+        </form>
         <p
           className={`${resetPassword.text} text text_type_main-default text_color_inactive mb-4`}
         >

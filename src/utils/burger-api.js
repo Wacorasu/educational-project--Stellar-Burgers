@@ -1,7 +1,8 @@
-import { BURGER_API_URL } from "./api.js";
+import { BURGER_API_URL, request } from "./api.js";
+
 
 const getOrder = (ingredients) => {
-  return fetch(`${BURGER_API_URL}/orders`, {
+  return request(`${BURGER_API_URL}/orders`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -13,7 +14,7 @@ const getOrder = (ingredients) => {
 };
 
 const getServerData = () => {
-  return fetch(`${BURGER_API_URL}/ingredients`);
+  return request(`${BURGER_API_URL}/ingredients`);
 };
 
 export { getOrder, getServerData };

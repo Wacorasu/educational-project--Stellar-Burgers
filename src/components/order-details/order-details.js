@@ -1,11 +1,11 @@
 import orderDetails from "./order-details.module.css";
 import React from "react";
-import checkIcon from "../../images/graphics.png";
+import checkIcon from "../../images/graphics.webp";
 import PropTypes from "prop-types";
 
 export default function OrderDetails({ orderInfo }) {
   return (
-    <div className={orderDetails.modalContainer}>
+    orderInfo ? (<div className={orderDetails.modalContainer}>
       <h3 className="text text_type_digits-large mb-4">
         {orderInfo.order.number}
       </h3>
@@ -17,7 +17,7 @@ export default function OrderDetails({ orderInfo }) {
       <p className="text text_type_main-default text_color_inactive">
         Дождитесь готовности на орбитальной станции
       </p>
-    </div>
+    </div>) : <h2 className="text text_type_main-default mb-2">Загрузка...</h2>
   );
 }
 

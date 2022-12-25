@@ -1,6 +1,5 @@
 import { combineReducers } from "redux";
 import { burgerConstructorReducer } from "./burger-constructor";
-import { ingredientDetailReducer } from "./ingredient-details";
 import { orderDetailReducer } from "./order-details";
 import {
   DATA_REQUEST,
@@ -72,7 +71,6 @@ const allIngredientsReducer = (state = initialState, action) => {
 export const rootReducer = combineReducers({
   allIngredients: allIngredientsReducer,
   burgerConstructor: burgerConstructorReducer,
-  ingredientDetail: ingredientDetailReducer,
   orderDetail: orderDetailReducer,
   authData: authDataReducer,
 });

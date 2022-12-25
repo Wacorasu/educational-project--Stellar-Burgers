@@ -21,24 +21,17 @@ import { getRefreshToken, getUserData } from "../../services/actions/auth-data";
 import { getCookie } from "../../utils/cookie-api";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import { CLOSE_DETAIL_INGREDIENTS } from "../../services/actions/ingredient-details";
 
 export default function App() {
-  const isModalDetailsOpened = useSelector(
-    (store) => store.ingredientDetail.isOpened
-  );
-  const ingredientDetail = useSelector(
-    (store) => store.ingredientDetail.ingredientDetails
-  );
   const data = useSelector((store) => store.allIngredients.data);
   const history = useHistory();
   const { isAuth } = useSelector((store) => store.authData);
   const dispatch = useDispatch();
-  let location = useLocation();
-  let background = location.state && location.state.background;
+  const location = useLocation();
+  const background = location.state && location.state.background;
+ 
 
-  function closeIngredientModal(e) {
-    dispatch({ type: CLOSE_DETAIL_INGREDIENTS });
+  function closeIngredientModal() {
     history.goBack();
   }
 
@@ -109,12 +102,12 @@ export default function App() {
         </Switch>
         {background && (
           <Route path="/ingredients/:id">
-            {isModalDetailsOpened && ingredientDetail && (
+            {location.state?.modalOpened  && (
               <Modal
                 title="Детали ингредиента"
                 closeAllModals={closeIngredientModal}
               >
-                <IngredientDetails data={ingredientDetail} />
+                <IngredientDetails/>
               </Modal>
             )}
           </Route>

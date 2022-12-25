@@ -6,7 +6,7 @@ import {
   BurgerIcon,
   ListIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, Link } from "react-router-dom";
 
 export default function AppHeader() {
   const location = useLocation();
@@ -47,7 +47,7 @@ export default function AppHeader() {
             </ul>
           </li>
           <li className={appHeader.logo}>
-            <Logo />
+           <Link to={{pathname:'/'}}> <Logo /> </Link>
           </li>
           <li>
             <NavLink
