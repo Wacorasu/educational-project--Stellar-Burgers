@@ -1,9 +1,27 @@
 import ingredientDetails from "./ingredient-details.module.css";
 import React from "react";
-import { ingredientPropType } from "../../utils/prop-types.js";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
-export default function IngredientDetails({ data }) {
-  const { name, image, calories, proteins, fat, carbohydrates } = data;
+
+export default function IngredientDetails() {
+
+  const data = useSelector((store) => store.allIngredients?.data) || [];
+  const { id } = useParams();
+
+  if (data.length===0) {
+    return "";
+  }
+
+  const {
+    name = "",
+    image = "",
+    calories = "",
+    proteins = "",
+    fat = "",
+    carbohydrates = "",
+  } = data.find((item) => item._id === id) || {};
+
   return (
     <div className={ingredientDetails.modalContainer}>
       <img
@@ -49,7 +67,3 @@ export default function IngredientDetails({ data }) {
     </div>
   );
 }
-
-IngredientDetails.propTypes = {
-  data: ingredientPropType.isRequired,
-};

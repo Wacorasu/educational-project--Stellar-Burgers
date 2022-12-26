@@ -1,5 +1,4 @@
 import { getOrder } from "../../utils/burger-api";
-import { checkResponse } from "../../utils/api.js";
 
 export const CREATE_ORDER_REQUEST = "CREATE_ORDER_REQUEST";
 export const CREATE_ORDER_SUCCESS = "CREATE_ORDER_SUCCESS";
@@ -11,7 +10,6 @@ export const createOrder = (ingredients) => (dispatch) => {
     type: CREATE_ORDER_REQUEST,
   });
   return getOrder(ingredients)
-    .then(checkResponse)
     .then((res) => {
       dispatch({
         type: CREATE_ORDER_SUCCESS,

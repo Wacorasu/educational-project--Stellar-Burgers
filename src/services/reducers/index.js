@@ -1,6 +1,5 @@
 import { combineReducers } from "redux";
 import { burgerConstructorReducer } from "./burger-constructor";
-import { ingredientDetailReducer } from "./ingredient-details";
 import { orderDetailReducer } from "./order-details";
 import {
   DATA_REQUEST,
@@ -9,6 +8,7 @@ import {
   INCREASE_COUNT,
   DECREASE_COUNT,
 } from "../actions/index";
+import {authDataReducer} from './auth-data'
 
 const initialState = {
   isLoading: false,
@@ -71,6 +71,6 @@ const allIngredientsReducer = (state = initialState, action) => {
 export const rootReducer = combineReducers({
   allIngredients: allIngredientsReducer,
   burgerConstructor: burgerConstructorReducer,
-  ingredientDetail: ingredientDetailReducer,
   orderDetail: orderDetailReducer,
+  authData: authDataReducer,
 });

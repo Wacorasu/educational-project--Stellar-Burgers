@@ -1,5 +1,4 @@
 import { getServerData } from "../../utils/burger-api";
-import { checkResponse } from "../../utils/api.js";
 
 export const DATA_REQUEST = "DATA_REQUEST";
 export const DATA_REQUEST_SUCCESS = "DATA_REQUEST_SUCCESS";
@@ -12,7 +11,6 @@ export const getData = () => (dispatch) => {
     type: DATA_REQUEST,
   });
   return getServerData()
-    .then(checkResponse)
     .then((res) => {
       dispatch({
         type: DATA_REQUEST_SUCCESS,

@@ -1,27 +1,18 @@
 import burgerIngredients from "./burger-ingredients.module.css";
 import React, { useEffect } from "react";
-import Modal from "../modal/modal.js";
-import IngredientDetails from "../ingredient-details/ingredient-details.js";
 import { BurgerIngredient } from "../burger-ingredient/burger-ingredient.js";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  CLOSE_DETAIL_INGREDIENTS,
-  OPEN_DETAIL_INGREDIENTS,
-} from "../../services/actions/ingredient-details";
-import {tabSwitchInterval} from '../../utils/constants'
+import { useSelector } from "react-redux";
+import { tabSwitchInterval } from "../../utils/constants";
+import { useLocation, useHistory } from "react-router-dom";
 
 export default function BurgerIngredients() {
   const [current, setCurrent] = React.useState("bun");
   const [currentTab, setCurrentTab] = React.useState("bun");
-  const isModalDetailsOpened = useSelector(
-    (store) => store.ingredientDetail.isOpened
-  );
-  const ingredientDetail = useSelector(
-    (store) => store.ingredientDetail.ingredientDetails
-  );
-  const dispatch = useDispatch();
+
   const data = useSelector((store) => store.allIngredients.data);
+  let location = useLocation();
+  const history = useHistory();
 
   const bunRef = React.useRef(null);
   const mainRef = React.useRef(null);
@@ -87,14 +78,13 @@ export default function BurgerIngredients() {
   }, [data]);
 
   function openDetailIngredients(e) {
-    dispatch({
-      type: OPEN_DETAIL_INGREDIENTS,
-      data: data.find((item) => item._id === e.currentTarget.id),
+    history.push({
+      pathname: `/ingredients/${e.currentTarget.id}`,
+      state: { background: location,
+      modalOpened: true },
     });
   }
-  function closeIngredientModal() {
-    dispatch({ type: CLOSE_DETAIL_INGREDIENTS });
-  }
+ 
   return (
     <section className={`${burgerIngredients.container}`}>
       <nav ref={navRef}>
@@ -135,7 +125,7 @@ export default function BurgerIngredients() {
           <div
             className={`${burgerIngredients.ingredientsContainer} pt-1 pr-2 pl-4 pb-5`}
           >
-            {buns.map((item, index) => {
+            {buns.map((item) => {
               return (
                 <BurgerIngredient
                   data={item}
@@ -186,11 +176,6 @@ export default function BurgerIngredients() {
           </div>
         </div>
       </div>
-      {isModalDetailsOpened && ingredientDetail && (
-        <Modal title="Детали ингредиента" closeAllModals={closeIngredientModal}>
-          <IngredientDetails data={ingredientDetail} />
-        </Modal>
-      )}
     </section>
   );
 }

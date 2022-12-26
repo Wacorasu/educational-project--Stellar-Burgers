@@ -6,8 +6,10 @@ import {
   BurgerIcon,
   ListIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { NavLink, useLocation, Link } from "react-router-dom";
 
 export default function AppHeader() {
+  const location = useLocation();
   return (
     <header className={`${appHeader.header} mb-5`}>
       <nav className={appHeader.navigation}>
@@ -15,36 +17,47 @@ export default function AppHeader() {
           <li>
             <ul className={appHeader.menuListLeft}>
               <li>
-                <a
+                <NavLink
                   className={`${appHeader.link} pt-4 pb-4 pl-5 pr-5 mr-2`}
-                  href="#"
+                  to={{ pathname: "/" }}
+                  activeClassName={appHeader.activeLink}
+                  exact
                 >
-                  <BurgerIcon type="primary" />
+                  <BurgerIcon
+                    type={location.pathname === "/" ? "primary" : "secondary"}
+                  />
                   <p className="text text_type_main-default ml-2">
                     Конструктор
                   </p>
-                </a>
+                </NavLink>
               </li>
               <li>
-                <a className={`${appHeader.link} pt-4 pb-4 pl-5 pr-5`} href="#">
-                  <ListIcon type="secondary" />
-                  <p className="text text_type_main-default text_color_inactive ml-2">
+                <NavLink
+                  className={`${appHeader.link} pt-4 pb-4 pl-5 pr-5`}
+                  to={{ pathname: "/orders-list" }}
+                  activeClassName={appHeader.activeLink}
+                  exact
+                >
+                  <ListIcon  type={location.pathname === "/orders-list" ? "primary" : "secondary"} />
+                  <p className="text text_type_main-default ml-2">
                     Лента заказов
                   </p>
-                </a>
+                </NavLink>
               </li>
             </ul>
           </li>
           <li className={appHeader.logo}>
-            <Logo />
+           <Link to={{pathname:'/'}}> <Logo /> </Link>
           </li>
           <li>
-            <a className={`${appHeader.link} pt-4 pb-4 pl-5 pr-5`} href="#">
-              <ProfileIcon type="secondary" />
-              <p className="text text_type_main-default text_color_inactive ml-2">
-                Личный кабинет
-              </p>
-            </a>
+            <NavLink
+              className={`${appHeader.link} pt-4 pb-4 pl-5 pr-5 ${location.pathname.indexOf('/profile') > -1 ? appHeader.activeLink : ""}`}
+              to={{ pathname: "/profile" }}
+              exact
+            >
+              <ProfileIcon type={location.pathname.indexOf('/profile') > -1 ? "primary" : "secondary"} />
+              <p className="text text_type_main-default ml-2">Личный кабинет</p>
+            </NavLink>
           </li>
         </ul>
       </nav>
