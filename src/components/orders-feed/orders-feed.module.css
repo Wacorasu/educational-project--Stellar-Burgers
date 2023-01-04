@@ -1,0 +1,78 @@
+.contentContainer {
+  display: flex;
+  width: 100%;
+}
+
+.contentContainer {
+  display: flex;
+  gap: 60px;
+}
+
+.ordersContainer {
+  margin: 0;
+  padding: 0;
+  padding-right: 8px;
+  max-width: 608px;
+  gap: 16px;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  max-height: 700px;
+}
+
+.ordersContainer::-webkit-scrollbar {
+  width: 8px;
+  height: 0px;
+  background-color: #2f2f37;
+}
+
+.ordersContainer::-webkit-scrollbar-thumb {
+  background-color: #8585ad;
+}
+
+.ordersInfo {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.ordersStatus {
+  width: 100%;
+  display: flex;
+  gap: 36px;
+  justify-content: space-between;
+}
+
+.ordersStatusColumn {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.ordersStatusList {
+  max-height: 230px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+  padding-bottom: 8px;
+  gap: 8px;
+  list-style: none;
+  overflow: auto;
+}
+
+.orderReady {
+  color: #00cccc;
+}
+
+.ordersStatusList::-webkit-scrollbar {
+  width: 0px;
+  height: 8px;
+  background-color: #2f2f37;
+}
+
+.ordersStatusList::-webkit-scrollbar-thumb {
+  background-color: #8585ad;
+}

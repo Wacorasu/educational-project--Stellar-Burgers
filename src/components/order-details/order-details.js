@@ -2,6 +2,7 @@ import orderDetails from "./order-details.module.css";
 import React from "react";
 import checkIcon from "../../images/graphics.webp";
 import PropTypes from "prop-types";
+import Spinner from "../spinner/spinner";
 
 export default function OrderDetails({ orderInfo }) {
   return (
@@ -17,7 +18,7 @@ export default function OrderDetails({ orderInfo }) {
       <p className="text text_type_main-default text_color_inactive">
         Дождитесь готовности на орбитальной станции
       </p>
-    </div>) : <h2 className="text text_type_main-default mb-2">Загрузка...</h2>
+    </div>) : <Spinner/>
   );
 }
 

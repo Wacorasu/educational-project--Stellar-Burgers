@@ -1,0 +1,50 @@
+.orderContainer {
+  width: 100%;
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  text-align: center;
+}
+
+.ingredientList {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  padding-right: 24px;
+  list-style: none;
+  overflow: auto;
+  max-height: 366px;
+  gap: 16px;
+}
+
+.priceContainer {
+  display: flex;
+  gap: 8px;
+}
+
+.ingredientList::-webkit-scrollbar {
+  width: 8px;
+  height: 0px;
+  background-color: #2f2f37;
+}
+
+.summaryContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ingredientList::-webkit-scrollbar-thumb {
+  background-color: #8585ad;
+}
+
+.statusTextDefault {
+  color: #f2f2f3;
+}
+
+.statusTextSuccess {
+  color: #00cccc;
+}

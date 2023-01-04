@@ -10,6 +10,7 @@ import {
 import NotFound from "./not-found";
 import { sendUpdatedData } from "../services/actions/auth-data";
 import { getRefreshToken } from "../services/actions/auth-data";
+import OrderHistory from "../components/order-history/order-history";
 
 export default function Profile() {
   const { userData } = useSelector((store) => store.authData);
@@ -287,7 +288,7 @@ export default function Profile() {
           </form>
         </Route>
         <Route path="/profile/order-history" exact>
-          <h2 className="text text_type_main-large">In progress</h2>
+          <OrderHistory />
         </Route>
         <Route>
           <NotFound />

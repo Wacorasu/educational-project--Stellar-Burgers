@@ -34,7 +34,7 @@ export default function AppHeader() {
               <li>
                 <NavLink
                   className={`${appHeader.link} pt-4 pb-4 pl-5 pr-5`}
-                  to={{ pathname: "/orders-list" }}
+                  to={{ pathname: "/feed" }}
                   activeClassName={appHeader.activeLink}
                   exact
                 >

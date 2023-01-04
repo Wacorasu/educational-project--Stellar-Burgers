@@ -29,11 +29,10 @@ import {
 const initialState = {
   isLoading: false,
   hasError: false,
-  isAuth: false,
   userData: null,
   isResetPassword: false,
   isAcceptPassword: false,
-  isTokenRefresh:false,
+  isTokenRefresh: false,
   errors: {
     errorUser: { hasError: false, text: "" },
     errorAuth: { hasError: false, text: "" },
@@ -104,7 +103,10 @@ export const authDataReducer = (state = initialState, action) => {
     case REGISTER_REQUEST: {
       return {
         ...state,
-        errors: { ...state.errors, errorRegister: initialState.errors.errorRegister },
+        errors: {
+          ...state.errors,
+          errorRegister: initialState.errors.errorRegister,
+        },
         isLoading: true,
       };
     }
@@ -156,7 +158,10 @@ export const authDataReducer = (state = initialState, action) => {
     case LOGOUT_REQUEST: {
       return {
         ...state,
-        errors: { ...state.errors, errorLogout: initialState.errors.errorLogout },
+        errors: {
+          ...state.errors,
+          errorLogout: initialState.errors.errorLogout,
+        },
         isLoading: true,
       };
     }
@@ -239,7 +244,7 @@ export const authDataReducer = (state = initialState, action) => {
     case REFRESH_TOKEN_REQUEST: {
       return {
         ...state,
-        isTokenRefresh:false,
+        isTokenRefresh: false,
         errors: {
           ...state.errors,
           errorRefreshToken: initialState.errors.errorRefreshToken,
@@ -251,7 +256,7 @@ export const authDataReducer = (state = initialState, action) => {
       return {
         ...state,
         isAuth: false,
-        isTokenRefresh:false,
+        isTokenRefresh: false,
         isLoading: false,
         errors: {
           ...state.errors,
@@ -262,7 +267,7 @@ export const authDataReducer = (state = initialState, action) => {
     case REFRESH_TOKEN_REQUEST_SUCCESS: {
       return {
         ...state,
-        isTokenRefresh:true,
+        isTokenRefresh: true,
         isAuth: action.payload.success,
         isLoading: false,
       };
