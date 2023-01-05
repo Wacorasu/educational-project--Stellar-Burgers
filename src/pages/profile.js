@@ -162,7 +162,7 @@ export default function Profile() {
             </li>
             <li className={profile.navLink}>
               <NavLink
-                to={{ pathname: "/profile/order-history" }}
+                to={{ pathname: "/profile/orders" }}
                 className={`${profile.link} text text_type_main-medium`}
                 activeClassName={profile.activeLink}
                 exact
@@ -287,7 +287,7 @@ export default function Profile() {
             </div>
           </form>
         </Route>
-        <Route path="/profile/order-history" exact>
+        <Route path="/profile/orders" exact>
           <OrderHistory />
         </Route>
         <Route>

@@ -3,7 +3,11 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   wsConnect,
-  WS_USER_ORDERS_DISCONNECT,
+  WS_DISCONNECT,
+  WS_USER_ORDERS_CONNECTING,
+  WS_USER_ORDERS_OPEN,
+  WS_USER_ORDERS_CLOSE,
+  WS_USER_ORDERS_ERROR,
 } from "../../services/actions/user-orders";
 import { BURGER_API_URL_WS } from "../../utils/api";
 import { getCookie } from "../../utils/cookie-api";
@@ -13,21 +17,36 @@ import Spinner from "../spinner/spinner";
 
 export default function OrderHistory() {
   const data = useSelector((store) => store.userOrders.ordersData);
-  const status = useSelector((store) => store.userOrders.status);
+  const status = useSelector((store) => store.userOrders.statusUserOrders);
   let location = useLocation();
   const history = useHistory();
   const dispatch = useDispatch();
+
+  const wsActions = {
+    wsConnecting: WS_USER_ORDERS_CONNECTING,
+    onOpen: WS_USER_ORDERS_OPEN,
+    onClose: WS_USER_ORDERS_CLOSE,
+    onError: WS_USER_ORDERS_ERROR,
+  };
+
   useEffect(() => {
     dispatch(
-      wsConnect(`${BURGER_API_URL_WS}/orders?token=${getCookie("accessToken")}`)
+      wsConnect(
+        `${BURGER_API_URL_WS}/orders?token=${getCookie("accessToken")}`,
+        wsActions
+      )
     );
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
     return () => {
       if (status === "connect") {
-        dispatch({ type: WS_USER_ORDERS_DISCONNECT });
+        dispatch({ type: WS_DISCONNECT });
       }
     };
     // eslint-disable-next-line
-  }, []);
+  }, [status]);
 
   function openOrderDetail(e) {
     history.push({
@@ -36,8 +55,8 @@ export default function OrderHistory() {
     });
   }
 
-  return !data.length>0 ? (
-    <Spinner/>
+  return !data?.length > 0 ? (
+    <Spinner />
   ) : (
     <ul className={`${orderHistory.ordersContainer} `}>
       {data.reverse().map((item, index) => {

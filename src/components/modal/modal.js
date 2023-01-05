@@ -17,7 +17,6 @@ export default function Modal({
 }) {
   const { id } = useParams();
 
-  /* eslint-disable */ //TODO необходимо выполнять при монтировании компонента
   useEffect(() => {
     const onEscKeydown = (e) => {
       e.key === "Escape" && closeAllModals();
@@ -26,8 +25,8 @@ export default function Modal({
     return () => {
       document.removeEventListener("keydown", onEscKeydown);
     };
+    // eslint-disable-next-line
   }, []);
-  /* eslint-disable */
 
   return ReactDOM.createPortal(
     <>

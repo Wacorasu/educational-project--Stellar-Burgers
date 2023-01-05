@@ -50,6 +50,7 @@
 }
 
 .ordersStatusList {
+  max-width: 243px;
   max-height: 230px;
   width: 100%;
   display: flex;
@@ -60,19 +61,10 @@
   padding-bottom: 8px;
   gap: 8px;
   list-style: none;
-  overflow: auto;
+  overflow: hidden;
+  
 }
 
 .orderReady {
   color: #00cccc;
-}
-
-.ordersStatusList::-webkit-scrollbar {
-  width: 0px;
-  height: 8px;
-  background-color: #2f2f37;
-}
-
-.ordersStatusList::-webkit-scrollbar-thumb {
-  background-color: #8585ad;
 }

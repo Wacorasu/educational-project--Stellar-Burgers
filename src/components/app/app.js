@@ -40,20 +40,17 @@ export default function App() {
   const location = useLocation();
   const background = location.state && location.state.background;
 
-
   function closeModal() {
     history.goBack();
   }
 
+  const regFeedUrl = /feed/;
+  const regOrdersURL = /profile.orders/;
 
-  const regFeedUrl= /feed/;
-  const regOrdersURL = /profile.orders/
-
-  /* eslint-disable */ //TODO необходим запрос данным при монтировании компонента
   useEffect(() => {
     dispatch(getData());
+    // eslint-disable-next-line
   }, []);
-  /* eslint-enable */
 
   useEffect(() => {
     dispatch(getUserData());
@@ -87,12 +84,12 @@ export default function App() {
           <Route path="/logout" exact>
             <LogOut />
           </Route>
-          <Route path="/ingredients/:id" exact>
+          <ProtectedRoute path="/ingredients/:id" exact>
             <Ingredient />
-          </Route>
-          <Route path="/profile/orders/:id">
+          </ProtectedRoute>
+          <ProtectedRoute path="/profile/orders/:id">
             <OrderDescriptionPage />
-          </Route>
+          </ProtectedRoute>
           <ProtectedRoute path="/profile">
             <Profile />
           </ProtectedRoute>
@@ -142,10 +139,14 @@ export default function App() {
               </Modal>
             )}
           </Route>
-        ): regOrdersURL.test(location.pathname) && <Redirect to={{ pathname: location.pathname}} />}
-        {background  && orderData?.length > 0 ? (
+        ) : (
+          regOrdersURL.test(location.pathname) && (
+            <Redirect to={{ pathname: location.pathname }} />
+          )
+        )}
+        {background && orderData?.length > 0 ? (
           <Route path="/feed/:id">
-            {location.state?.modalOpened &&  (
+            {location.state?.modalOpened && (
               <Modal
                 title={"#"}
                 closeAllModals={closeModal}
@@ -156,7 +157,11 @@ export default function App() {
               </Modal>
             )}
           </Route>
-        ) :  regFeedUrl.test(location.pathname) && <Redirect to={{ pathname: location.pathname}} />}
+        ) : (
+          regFeedUrl.test(location.pathname) && (
+            <Redirect to={{ pathname: location.pathname }} />
+          )
+        )}
       </main>
     </div>
   );

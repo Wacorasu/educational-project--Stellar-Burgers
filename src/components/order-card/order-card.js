@@ -1,5 +1,5 @@
 import orderCard from "./order-card.module.css";
-import React from "react";
+import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import {
   FormattedDate,
@@ -7,8 +7,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { MAX_LENGTH_PREVIEW_ORDER_IMAGE } from "../../utils/constants";
 import PropTypes from "prop-types";
-
-let localStatus = {};
+import { cardDataPropType } from "../../utils/prop-types";
 
 export default function OrderCard({ data, onClick, hasStatus }) {
   const allIngredients = useSelector((store) => store.allIngredients.data);
@@ -27,27 +26,34 @@ export default function OrderCard({ data, onClick, hasStatus }) {
     }
     return "";
   });
-  const price = allUsedIngredients.reduce(
-    (pre, item) => pre + item.price,
-    null
-  );
 
-  switch (status) {
-    case "done": {
-      localStatus = { text: "Выполнен", styles: orderCard.statusTextSuccess };
-      break;
+  const price = useMemo(() => {
+    allUsedIngredients.reduce((pre, item) => pre + item.price, null);
+  }, [allUsedIngredients]);
+
+  const localStatus = useMemo(() => {
+    switch (status) {
+      case "done":
+        return {
+          text: "Выполнен",
+          styles: orderCard.statusTextSuccess,
+        };
+      case "pending":
+        return {
+          text: "Готовится",
+          styles: orderCard.statusTextDefault,
+        };
+      case "created":
+        return {
+          text: "Создан",
+          styles: orderCard.statusTextDefault,
+        };
+      default:
+        return {
+          text: "Неизвестен",
+        };
     }
-    case "pending": {
-      localStatus = { text: "Готовится", styles: orderCard.statusTextDefault };
-      break;
-    }
-    case "created": {
-      localStatus = { text: "Создан", styles: orderCard.statusTextDefault };
-      break;
-    }
-    default:
-      break;
-  }
+  }, [status]);
 
   return data ? (
     <div
@@ -120,13 +126,7 @@ export default function OrderCard({ data, onClick, hasStatus }) {
 }
 
 OrderCard.propTypes = {
-  data: PropTypes.shape({
-    status: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    createdAt: PropTypes.string.isRequired,
-    ingredients: PropTypes.array.isRequired,
-    number: PropTypes.number.isRequired,
-  }).isRequired,
+  data: cardDataPropType.isRequired,
   onClick: PropTypes.func.isRequired,
   hasStatus: PropTypes.bool,
 };

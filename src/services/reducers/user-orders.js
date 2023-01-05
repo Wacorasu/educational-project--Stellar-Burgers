@@ -2,8 +2,12 @@ import {
   WS_USER_ORDERS_CLOSE,
   WS_USER_ORDERS_CONNECTING,
   WS_USER_ORDERS_ERROR,
-  WS_USER_ORDERS_MESSAGE,
   WS_USER_ORDERS_OPEN,
+  WS_ALL_ORDERS_CLOSE,
+  WS_ALL_ORDERS_CONNECTING,
+  WS_ALL_ORDERS_ERROR,
+  WS_ALL_ORDERS_OPEN,
+  WS_ORDERS_MESSAGE,
   SINGLE_ORDER_REQUEST,
   SINGLE_ORDER_REQUEST_SUCCESS,
   SINGLE_ORDER_REQUEST_FAILED,
@@ -11,12 +15,14 @@ import {
 
 const initialState = {
   isLoadingSingleOrders: false,
-  status: "disconnect",
+  statusUserOrders: "disconnect",
+  statusAllOrders: "disconnect",
   ordersData: [],
   singleOrder: [],
   total: null,
   totalToday: null,
-  error: "",
+  errorUserOrders: "",
+  errorAllOrders: "",
   errorsSingleOrders: { hasError: false, text: "" },
 };
 
@@ -25,30 +31,55 @@ export const wsUserOrdersReducer = (state = initialState, action) => {
     case WS_USER_ORDERS_CONNECTING:
       return {
         ...state,
-        status: "connecting",
+        statusUserOrders: "connecting",
       };
 
     case WS_USER_ORDERS_OPEN:
       return {
         ...state,
-        error: "",
-        status: "connect",
+        errorUserOrders: "",
+        statusUserOrders: "connect",
       };
 
     case WS_USER_ORDERS_CLOSE:
       return {
         ...state,
-        error: "",
-        status: "disconnect",
+        errorUserOrders: "",
+        statusUserOrders: "disconnect",
       };
 
     case WS_USER_ORDERS_ERROR:
       return {
         ...state,
-        error: action.payload,
+        errorUserOrders: action.payload,
+      };
+    case WS_ALL_ORDERS_CONNECTING:
+      return {
+        ...state,
+        statusAllOrders: "connecting",
       };
 
-    case WS_USER_ORDERS_MESSAGE:
+    case WS_ALL_ORDERS_OPEN:
+      return {
+        ...state,
+        errorAllOrders: "",
+        statusAllOrders: "connect",
+      };
+
+    case WS_ALL_ORDERS_CLOSE:
+      return {
+        ...state,
+        errorAllOrders: "",
+        statusAllOrders: "disconnect",
+      };
+
+    case WS_ALL_ORDERS_ERROR:
+      return {
+        ...state,
+        errorAllOrders: action.payload,
+      };
+
+    case WS_ORDERS_MESSAGE:
       return {
         ...state,
         total: action.payload.total,

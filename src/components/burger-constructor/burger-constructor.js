@@ -66,7 +66,7 @@ export default function BurgerConstructor() {
     setIsOrderDetailsOpened(false);
     dispatch({ type: ORDER_RESET });
     dispatch({ type: CONSTRUCTOR_RESET });
-    dispatch({type: RESET_COUNT})
+    dispatch({ type: RESET_COUNT });
   };
 
   function openDetailOrder() {
@@ -90,15 +90,14 @@ export default function BurgerConstructor() {
     dispatch({ type: DECREASE_COUNT, item: { ...removeItem } });
   };
 
-  /* eslint-disable */ //TODO нет необходимости в зависимости от dispatch
   const moveIngredients = useCallback((dragIndex, hoverIndex) => {
     dispatch({
       type: CONSTRUCTOR_REORDER,
       hoverIndex: hoverIndex,
       dragIndex: dragIndex,
     });
+    // eslint-disable-next-line
   }, []);
-  /* eslint-enable */
 
   const getTotalPrice = React.useMemo(() => {
     return `${

@@ -3,7 +3,11 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   wsConnect,
-  WS_USER_ORDERS_DISCONNECT,
+  WS_DISCONNECT,
+  WS_ALL_ORDERS_CONNECTING,
+  WS_ALL_ORDERS_OPEN,
+  WS_ALL_ORDERS_CLOSE,
+  WS_ALL_ORDERS_ERROR,
 } from "../../services/actions/user-orders";
 import { BURGER_API_URL_WS } from "../../utils/api";
 import OrderCard from "../order-card/order-card";
@@ -12,19 +16,32 @@ import Spinner from "../spinner/spinner";
 
 export default function OrdersFeed() {
   const data = useSelector((store) => store.userOrders);
-  const status = useSelector((store) => store.userOrders.status);
-  let location = useLocation();
+  const status = useSelector((store) => store.userOrders.statusAllOrders);
+  const location = useLocation();
   const history = useHistory();
   const dispatch = useDispatch();
+
+  const wsActions = {
+    wsConnecting: WS_ALL_ORDERS_CONNECTING,
+    onOpen: WS_ALL_ORDERS_OPEN,
+    onClose: WS_ALL_ORDERS_CLOSE,
+    onError: WS_ALL_ORDERS_ERROR,
+  };
+
   useEffect(() => {
-    dispatch(wsConnect(`${BURGER_API_URL_WS}/orders/all`));
+    dispatch(wsConnect(`${BURGER_API_URL_WS}/orders/all`, wsActions));
+
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
     return () => {
       if (status === "connect") {
-        dispatch({ type: WS_USER_ORDERS_DISCONNECT });
+        dispatch({ type: WS_DISCONNECT });
       }
     };
     // eslint-disable-next-line
-  }, []);
+  }, [status]);
 
   const { ordersData, total, totalToday } = data;
   const orderInprogress = ordersData.filter(

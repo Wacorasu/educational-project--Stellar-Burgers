@@ -1,22 +1,19 @@
-export const socketMiddleware = (wsActions) => {
+export const socketMiddleware = (wsStaticActions) => {
   return (store) => {
     let socket = null;
     let isConnected = false;
     let reconnectTimer = 0;
     let url = "";
+    let { onOpen, onError, wsConnecting, onClose } = [];
 
     return (next) => (action) => {
       const { dispatch } = store;
-      const { type, payload } = action;
-      const {
-        wsConnect,
-        wsDisconnect,
-        wsConnecting,
-        onOpen,
-        onClose,
-        onError,
-        onMessage,
-      } = wsActions;
+      const { type, payload, wsActions } = action;
+      const { wsConnect, wsDisconnect, onMessage } = wsStaticActions;
+
+      if (wsActions) {
+        ({ onOpen, onError, wsConnecting, onClose } = wsActions);
+      }
 
       if (type === wsConnect && !isConnected) {
         url = payload;
@@ -41,13 +38,6 @@ export const socketMiddleware = (wsActions) => {
           }
 
           dispatch({ type: onClose, payload: event.code.toString() });
-          console.log(socket.readyState);
-          /*   if(isConnected){
-            dispatch({type: wsConnecting});
-            reconnectTimer = window.setTimeout(() => {
-                dispatch({type:wsConnect, payload:url})
-            }, 3000)
-          } */
         };
 
         socket.onmessage = (event) => {
@@ -62,7 +52,6 @@ export const socketMiddleware = (wsActions) => {
           reconnectTimer = 0;
 
           socket.close(1000, "Работа приложения закончена");
-          console.log(socket.readyState);
         }
       }
 

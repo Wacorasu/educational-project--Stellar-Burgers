@@ -11,11 +11,13 @@ export default function OrderDescriptionPage() {
   const data = useSelector((store) => store.userOrders.singleOrder);
   const { id } = useParams();
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getSingleOrder(id));
     // eslint-disable-next-line
   }, []);
-  return (data.length > 0 && allIngredients?.length>0) ? (
+
+  return data.length > 0 && allIngredients?.length > 0 ? (
     <div className={`${orderDescriptionPage.orderContainer}`}>
       <OrderDescription />
     </div>

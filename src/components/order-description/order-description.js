@@ -1,5 +1,5 @@
 import orderDescription from "./order-description.module.css";
-import React from "react";
+import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import OrderIngredientCard from "../order-ingredient-card/order-ingredient-card";
@@ -9,18 +9,17 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Spinner from "../spinner/spinner";
 
-let localStatus = {};
-
 export default function OrderDescription() {
   const data = useSelector((store) => store.userOrders.ordersData);
   const singleData = useSelector((store) => store.userOrders.singleOrder);
   const allIngredients = useSelector((store) => store.allIngredients.data);
 
   const { id } = useParams();
-  
-  const orderData = data.length>0
-    ? data.find((item) => `${item.number}` === id)
-    : singleData[0];
+
+  const orderData =
+    data.length > 0
+      ? data.find((item) => `${item.number}` === id)
+      : singleData[0];
 
   const { status, name, createdAt, ingredients, number } = orderData;
 
@@ -42,36 +41,33 @@ export default function OrderDescription() {
       return { ...item, qty: count };
     });
 
-  const price = usedIngredients.reduce(
-    (pre, item) => pre + item.price * item.qty,
-    null
-  );
+  const price = useMemo(() => {
+    usedIngredients.reduce((pre, item) => pre + item.price * item.qty, null);
+  }, [usedIngredients]);
 
-  switch (status) {
-    case "done": {
-      localStatus = {
-        text: "Выполнен",
-        styles: orderDescription.statusTextSuccess,
-      };
-      break;
+  const localStatus = useMemo(() => {
+    switch (status) {
+      case "done":
+        return {
+          text: "Выполнен",
+          styles: orderDescription.statusTextSuccess,
+        };
+      case "pending":
+        return {
+          text: "Готовится",
+          styles: orderDescription.statusTextDefault,
+        };
+      case "created":
+        return {
+          text: "Создан",
+          styles: orderDescription.statusTextDefault,
+        };
+      default:
+        return {
+          text: "Неизвестен",
+        };
     }
-    case "pending": {
-      localStatus = {
-        text: "Готовится",
-        styles: orderDescription.statusTextDefault,
-      };
-      break;
-    }
-    case "created": {
-      localStatus = {
-        text: "Создан",
-        styles: orderDescription.statusTextDefault,
-      };
-      break;
-    }
-    default:
-      break;
-  }
+  }, [status]);
 
   return !data ? (
     <Spinner />
