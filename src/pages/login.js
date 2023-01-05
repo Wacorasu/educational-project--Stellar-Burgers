@@ -1,7 +1,7 @@
 import login from "./login.module.css";
 import React, { useState, useCallback, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, Redirect, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Input,
   Button,
@@ -24,12 +24,9 @@ export default function Login() {
     inputPasswordErrorText: "",
   });
 
-  const location = useLocation();
-
   const dispatch = useDispatch();
   const inputEmailRef = React.useRef(null);
   const inputPasswordRef = React.useRef(null);
-  const { isAuth } = useSelector((store) => store.authData);
 
   useEffect(() => {
     if (serverErrors?.hasError && formValue.email) {
@@ -103,7 +100,7 @@ export default function Login() {
     }
   };
 
-  return !isAuth ? (
+  return (
     <section className={login.page}>
       <div className={`${login.loginContainer} pt-25`}>
         <form
@@ -174,11 +171,5 @@ export default function Login() {
         </p>
       </div>
     </section>
-  ) : (
-    <Redirect
-      to={{
-        pathname: location.state?.from ? location.state.from.pathname : "/",
-      }}
-    />
   );
 }

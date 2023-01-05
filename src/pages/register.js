@@ -1,7 +1,7 @@
 import register from "./register.module.css";
 import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Input,
   Button,
@@ -9,7 +9,6 @@ import {
 import { getRegister } from "../services/actions/auth-data";
 
 export default function Register() {
-  const history = useHistory();
   const serverErrors = useSelector(
     (store) => store.authData.errors.errorRegister
   );
@@ -28,7 +27,6 @@ export default function Register() {
     inputPasswordText: "",
   });
 
-  const { isAuth } = useSelector((store) => store.authData);
   const dispatch = useDispatch();
   const inputEmailRef = React.useRef(null);
   const inputNameRef = React.useRef(null);
@@ -113,7 +111,7 @@ export default function Register() {
     }
   };
 
-  return !isAuth ? (
+  return (
     <section className={register.page}>
       <div className={`${register.registerContainer} pt-25`}>
         <form
@@ -191,7 +189,5 @@ export default function Register() {
         </p>
       </div>
     </section>
-  ) : (
-    history.replace({ pathname: "/" })
   );
 }

@@ -31,7 +31,7 @@ export default function ResetPassword() {
   const dispatch = useDispatch();
   const inputPasswordRef = React.useRef(null);
   const inputTokenRef = React.useRef(null);
-  const { isAuth, isResetPassword, isAcceptPassword } = useSelector(
+  const { isResetPassword, isAcceptPassword } = useSelector(
     (store) => store.authData
   );
 
@@ -111,7 +111,7 @@ export default function ResetPassword() {
     }
   };
 
-  return !isAuth && isResetPassword ? (
+  return isResetPassword ? (
     <section className={resetPassword.page}>
       <div className={`${resetPassword.resetPasswordContainer} pt-25`}>
         <form

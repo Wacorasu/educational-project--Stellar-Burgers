@@ -7,8 +7,10 @@ import {
   DATA_REQUEST_FAILED,
   INCREASE_COUNT,
   DECREASE_COUNT,
+  RESET_COUNT,
 } from "../actions/index";
-import {authDataReducer} from './auth-data'
+import { authDataReducer } from "./auth-data";
+import { wsUserOrdersReducer } from "./user-orders";
 
 const initialState = {
   isLoading: false,
@@ -62,6 +64,11 @@ const allIngredientsReducer = (state = initialState, action) => {
         ],
       };
     }
+    case RESET_COUNT: {
+      return { ...state,
+        data:[...state.data.map(item=>{ return{...item, count:0}})]
+       };
+    }
     default: {
       return state;
     }
@@ -73,4 +80,5 @@ export const rootReducer = combineReducers({
   burgerConstructor: burgerConstructorReducer,
   orderDetail: orderDetailReducer,
   authData: authDataReducer,
+  userOrders: wsUserOrdersReducer,
 });

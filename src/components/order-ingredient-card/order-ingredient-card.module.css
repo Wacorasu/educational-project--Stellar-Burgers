@@ -1,0 +1,38 @@
+.cardContainer {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.image {
+  z-index: 1;
+  max-width: 64px;
+  box-sizing: border-box;
+  padding: 3px;
+  object-fit: cover;
+  border-radius: 50%;
+  border-color: aquamarine;
+  border: 3px solid transparent;
+  background: linear-gradient(to right, #131316, #131316),
+    linear-gradient(15deg, #801ab2, #4c4cff);
+  background-clip: padding-box, border-box;
+  background-origin: padding-box, border-box;
+  aspect-ratio: 1;
+}
+
+.priceContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.text {
+  text-align: left;
+  flex-grow: 1;
+}
+
+.price {
+  width: 100%;
+}

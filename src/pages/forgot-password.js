@@ -23,7 +23,7 @@ export default function ForgotPassword() {
   const history = useHistory();
   const dispatch = useDispatch();
   const inputEmailRef = React.useRef(null);
-  const { isAuth, isResetPassword } = useSelector((store) => store.authData);
+  const { isResetPassword } = useSelector((store) => store.authData);
 
   const handleReset = useCallback(
     (e) => {
@@ -87,7 +87,7 @@ export default function ForgotPassword() {
     }
   };
 
-  return !isAuth ? (
+  return (
     <section className={forgotPassword.page}>
       <div className={`${forgotPassword.forgotPasswordContainer} pt-25`}>
         <form
@@ -131,7 +131,5 @@ export default function ForgotPassword() {
         </p>
       </div>
     </section>
-  ) : (
-    history.replace({ pathname: "/" })
   );
 }

@@ -14,3 +14,11 @@ export const ingredientPropType = PropTypes.shape({
   image_large: PropTypes.string.isRequired,
   __v: PropTypes.number.isRequired,
 });
+
+export const cardDataPropType = PropTypes.shape({
+  status: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  createdAt: PropTypes.string.isRequired,
+  ingredients: PropTypes.array.isRequired,
+  number: PropTypes.number.isRequired,
+});

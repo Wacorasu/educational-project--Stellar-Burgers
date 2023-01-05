@@ -1,0 +1,94 @@
+.orderCardContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  background-color: #1c1c21;
+  padding: 24px;
+  border-radius: 40px;
+}
+
+.orderInfo {
+  display: flex;
+  justify-content: space-between;
+}
+
+.summaryContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.priceContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.image {
+  z-index: 1;
+  max-width: 64px;
+  box-sizing: border-box;
+  padding: 3px;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 50%;
+  border-color: aquamarine;
+  border: 3px solid transparent;
+  margin-right: -20px;
+  background: linear-gradient(to right, #131316, #131316),
+    linear-gradient(15deg, #801ab2, #4c4cff);
+  background-clip: padding-box, border-box;
+  background-origin: padding-box, border-box;
+}
+
+.countContainer {
+  display: flex;
+  position: relative;
+  max-width: 64px;
+  width: 100%;
+  aspect-ratio: 1;
+  margin-right: -20px;
+}
+
+.imageCount {
+  opacity: 0.6;
+  z-index: 1;
+  max-width: 64px;
+  box-sizing: border-box;
+  padding: 3px;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 50%;
+  border-color: aquamarine;
+  border: 3px solid transparent;
+
+  background: linear-gradient(to right, #131316, #131316),
+    linear-gradient(15deg, #801ab2, #4c4cff);
+  background-clip: padding-box, border-box;
+  background-origin: padding-box, border-box;
+}
+
+.count {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.imgPreview {
+  z-index: 0;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.statusTextDefault {
+  color: #f2f2f3;
+}
+
+.statusTextSuccess {
+  color: #00cccc;
+}
