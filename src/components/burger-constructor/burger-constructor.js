@@ -123,9 +123,8 @@ export default function BurgerConstructor() {
             <ul
               ref={dropIngredient}
               className={`${burgerConstructor.constructorBetweenBunsList} `}
-              style={{ border: "2, solid, blue" }}
             >
-              {!constructorIngredients && (
+              {!constructorIngredients?.length>0 && (
                 <li
                   className={
                     burgerConstructor.constructorIngredientsPlaceholder

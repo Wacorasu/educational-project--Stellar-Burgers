@@ -13,23 +13,25 @@ export default function OrderCard({ data, onClick, hasStatus }) {
   const allIngredients = useSelector((store) => store.allIngredients.data);
   const { status, name, createdAt, ingredients, number } = data;
   let hasBun = false;
+
   const allUsedIngredients = ingredients.map((item) => {
     return allIngredients.find((itemSort) => item === itemSort._id);
   });
 
   const usedIngredients = allUsedIngredients.filter((item) => {
-    if (item.type === "bun" && !hasBun) {
+    if (item?.type === "bun" && !hasBun) {
       hasBun = true;
       return item;
-    } else if (item.type !== "bun") {
+    } else if (item?.type !== "bun") {
       return item;
     }
     return "";
   });
 
-  const price = useMemo(() => {
-    allUsedIngredients.reduce((pre, item) => pre + item.price, null);
-  }, [allUsedIngredients]);
+  const price = allUsedIngredients.reduce((pre, item) =>  pre + item.price, null);
+ 
+
+  console.log(allUsedIngredients)
 
   const localStatus = useMemo(() => {
     switch (status) {

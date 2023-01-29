@@ -43,11 +43,11 @@ export default function OrdersFeed() {
     // eslint-disable-next-line
   }, [status]);
 
-  const { ordersData, total, totalToday } = data;
-  const orderInprogress = ordersData.filter(
+  const { allOrdersData, total, totalToday } = data;
+  const orderInprogress = allOrdersData.filter(
     (item) => item.status === "pending"
   );
-  const orderDone = ordersData.filter((item) => item.status === "done");
+  const orderDone = allOrdersData.filter((item) => item.status === "done");
 
   function openOrderDetail(e) {
     history.push({
@@ -56,14 +56,14 @@ export default function OrdersFeed() {
     });
   }
 
-  return !(ordersData.length > 0) ? (
+  return !allOrdersData?.length > 0 ? (
     <Spinner />
   ) : (
     <section className={`${ordersFeed.feedContainer} `}>
       <h2 className="text text_type_main-large mb-5">Лента заказов</h2>
       <div className={`${ordersFeed.contentContainer} `}>
         <ul className={`${ordersFeed.ordersContainer} `}>
-          {ordersData.reverse().map((item, index) => {
+          {allOrdersData.reverse().map((item, index) => {
             return (
               <li key={index}>
                 <OrderCard data={item} onClick={openOrderDetail} />

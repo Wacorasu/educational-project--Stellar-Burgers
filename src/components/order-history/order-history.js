@@ -16,7 +16,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import Spinner from "../spinner/spinner";
 
 export default function OrderHistory() {
-  const data = useSelector((store) => store.userOrders.ordersData);
+  const data = useSelector((store) => store.userOrders.userOrdersData);
   const status = useSelector((store) => store.userOrders.statusUserOrders);
   let location = useLocation();
   const history = useHistory();
@@ -59,7 +59,7 @@ export default function OrderHistory() {
     <Spinner />
   ) : (
     <ul className={`${orderHistory.ordersContainer} `}>
-      {data.reverse().map((item, index) => {
+      {Array.from(data).reverse().map((item, index) => {
         return (
           <li key={index}>
             <OrderCard data={item} onClick={openOrderDetail} hasStatus />

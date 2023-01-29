@@ -17,7 +17,8 @@ const initialState = {
   isLoadingSingleOrders: false,
   statusUserOrders: "disconnect",
   statusAllOrders: "disconnect",
-  ordersData: [],
+  userOrdersData: [],
+  allOrdersData:[],
   singleOrder: [],
   total: null,
   totalToday: null,
@@ -45,7 +46,7 @@ export const wsUserOrdersReducer = (state = initialState, action) => {
       return {
         ...state,
         errorUserOrders: "",
-        statusUserOrders: "disconnect",
+        statusUserOrders: "disconnect"
       };
 
     case WS_USER_ORDERS_ERROR:
@@ -70,7 +71,7 @@ export const wsUserOrdersReducer = (state = initialState, action) => {
       return {
         ...state,
         errorAllOrders: "",
-        statusAllOrders: "disconnect",
+        statusAllOrders: "disconnect"
       };
 
     case WS_ALL_ORDERS_ERROR:
@@ -84,7 +85,8 @@ export const wsUserOrdersReducer = (state = initialState, action) => {
         ...state,
         total: action.payload.total,
         totalToday: action.payload.totalToday,
-        ordersData: action.payload.orders,
+        userOrdersData: state.statusUserOrders==='connect' ? action.payload.orders : initialState.userOrdersData,
+        allOrdersData: state.statusAllOrders==='connect' ? action.payload.orders : initialState.allOrdersData,
       };
     case SINGLE_ORDER_REQUEST: {
       return {
