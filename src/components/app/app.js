@@ -7,7 +7,13 @@ import BurgerConstructor from "../burger-constructor/burger-constructor.js";
 import { getData } from "../../services/actions/index";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { Route, Switch, useLocation, useHistory } from "react-router-dom";
+import {
+  Route,
+  Switch,
+  useLocation,
+  useHistory,
+  Redirect,
+} from "react-router-dom";
 import Ingredient from "../../pages/ingredient";
 import Login from "../../pages/login";
 import Register from "../../pages/register";
@@ -21,25 +27,30 @@ import { getRefreshToken, getUserData } from "../../services/actions/auth-data";
 import { getCookie } from "../../utils/cookie-api";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import OrderDescription from "../order-description/order-description";
+import OrderDescriptionPage from "../order-description-page/order-description-page";
+import OrdersFeed from "../orders-feed/orders-feed";
 
 export default function App() {
   const data = useSelector((store) => store.allIngredients.data);
+  const orderData = useSelector((store) => store.userOrders.ordersData);
   const history = useHistory();
   const { isAuth } = useSelector((store) => store.authData);
   const dispatch = useDispatch();
   const location = useLocation();
   const background = location.state && location.state.background;
- 
 
-  function closeIngredientModal() {
+  function closeModal() {
     history.goBack();
   }
 
-  /* eslint-disable */ //TODO необходим запрос данным при монтировании компонента
+  const regFeedUrl = /feed/;
+  const regOrdersURL = /profile.orders/;
+
   useEffect(() => {
     dispatch(getData());
+    // eslint-disable-next-line
   }, []);
-  /* eslint-enable */
 
   useEffect(() => {
     dispatch(getUserData());
@@ -47,8 +58,8 @@ export default function App() {
     if (!isAuth && refreshToken) {
       dispatch(getRefreshToken());
     }
-     // eslint-disable-next-line
-  }, [isAuth]);
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <div className={app.main}>
@@ -58,30 +69,36 @@ export default function App() {
           <Route path="/ingredient" exact>
             <Ingredient />
           </Route>
-          <Route path="/register" exact>
+          <ProtectedRoute path="/register" onlyUnAuth>
             <Register />
-          </Route>
-          <Route path="/reset-password" exact>
+          </ProtectedRoute>
+          <ProtectedRoute path="/reset-password" onlyUnAuth>
             <ResetPassword />
-          </Route>
-          <Route path="/forgot-password" exact>
+          </ProtectedRoute>
+          <ProtectedRoute path="/forgot-password" onlyUnAuth>
             <ForgotPassword />
-          </Route>
-          <Route path="/login" exact>
+          </ProtectedRoute>
+          <ProtectedRoute path="/login" onlyUnAuth>
             <Login />
-          </Route>
+          </ProtectedRoute>
           <Route path="/logout" exact>
             <LogOut />
           </Route>
-          <Route path="/ingredients/:id" exact>
+          <ProtectedRoute path="/ingredients/:id" exact>
             <Ingredient />
+          </ProtectedRoute>
+          <ProtectedRoute path="/profile/orders/:id">
+            <OrderDescriptionPage />
+          </ProtectedRoute>
+          <ProtectedRoute path="/profile">
+            <Profile />
+          </ProtectedRoute>
+          <Route path="/feed/:id">
+            <OrderDescriptionPage />
           </Route>
-          <ProtectedRoute path="/profile" exact={true}>
-            <Profile />
-          </ProtectedRoute>
-          <ProtectedRoute path="/profile/order-history" exact={true}>
-            <Profile />
-          </ProtectedRoute>
+          <Route path="/feed">
+            <OrdersFeed />
+          </Route>
           <Route path="/" exact>
             <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>
 
@@ -102,15 +119,48 @@ export default function App() {
         </Switch>
         {background && (
           <Route path="/ingredients/:id">
-            {location.state?.modalOpened  && (
-              <Modal
-                title="Детали ингредиента"
-                closeAllModals={closeIngredientModal}
-              >
-                <IngredientDetails/>
+            {location.state?.modalOpened && (
+              <Modal title="Детали ингредиента" closeAllModals={closeModal}>
+                <IngredientDetails />
               </Modal>
             )}
           </Route>
+        )}
+        {background && orderData?.length > 0 ? (
+          <Route path="/profile/orders/:id">
+            {location.state?.modalOpened && (
+              <Modal
+                title={"#"}
+                closeAllModals={closeModal}
+                getTitle
+                styles="text text_type_digits-default"
+              >
+                <OrderDescription />
+              </Modal>
+            )}
+          </Route>
+        ) : (
+          regOrdersURL.test(location.pathname) && (
+            <Redirect to={{ pathname: location.pathname }} />
+          )
+        )}
+        {background && orderData?.length > 0 ? (
+          <Route path="/feed/:id">
+            {location.state?.modalOpened && (
+              <Modal
+                title={"#"}
+                closeAllModals={closeModal}
+                getTitle
+                styles="text text_type_digits-default"
+              >
+                <OrderDescription />
+              </Modal>
+            )}
+          </Route>
+        ) : (
+          regFeedUrl.test(location.pathname) && (
+            <Redirect to={{ pathname: location.pathname }} />
+          )
         )}
       </main>
     </div>

@@ -1,0 +1,22 @@
+
+.profileContainer{
+    max-width: 480px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 24px;
+}
+
+
+
+.buttonContainer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.buttonContainerHide {
+    display: none;
+}
+

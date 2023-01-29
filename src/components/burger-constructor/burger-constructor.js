@@ -1,5 +1,5 @@
 import burgerConstructor from "./burger-constructor.module.css";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import OrderDetails from "../order-details/order-details.js";
 import Modal from "../modal/modal.js";
 import {
@@ -13,14 +13,15 @@ import {
   addToConstructor,
   CONSTRUCTOR_DELETE,
   CONSTRUCTOR_REORDER,
-  CONSTRUCTOR_RESET
+  CONSTRUCTOR_RESET,
 } from "../../services/actions/burger-constructor";
 import { INCREASE_COUNT, DECREASE_COUNT } from "../../services/actions/index";
 import { useDrop } from "react-dnd";
 import { ConstructorIngredients } from "../constructor-ingredients/constructor-ingredients";
 import { ConstructorBun } from "../constructor-bun/constructor-bun";
 import { useHistory } from "react-router-dom";
-
+import { getRefreshToken } from "../../services/actions/auth-data";
+import { RESET_COUNT } from "../../services/actions/index";
 
 export default function BurgerConstructor() {
   const orderData = useSelector((store) => store.orderDetail.data);
@@ -31,24 +32,41 @@ export default function BurgerConstructor() {
   const dispatch = useDispatch();
   const { isAuth } = useSelector((store) => store.authData);
   const history = useHistory();
+  const serverErrors = useSelector((store) => store.orderDetail.hasError);
+  const { isTokenRefresh } = useSelector((store) => store.authData);
 
   const sendOrder = () => {
     if (isAuth) {
-    dispatch(
-      createOrder([constructorBun, ...constructorIngredients, constructorBun])
-    );
-    openDetailOrder();
-  } else {
-    history.push({pathname:'/login'})
-  }
+      dispatch(
+        createOrder([constructorBun, ...constructorIngredients, constructorBun])
+      );
+      openDetailOrder();
+    } else {
+      history.push({ pathname: "/login" });
+    }
   };
+
+  useEffect(() => {
+    if (serverErrors) {
+      dispatch(getRefreshToken());
+    }
+    // eslint-disable-next-line
+  }, [serverErrors]);
+
+  useEffect(() => {
+    if (isTokenRefresh && serverErrors) {
+      sendOrder();
+    }
+    // eslint-disable-next-line
+  }, [isTokenRefresh]);
 
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
 
   const closeDetailOrder = () => {
-    dispatch({ type: ORDER_RESET });
-    dispatch({type: CONSTRUCTOR_RESET})
     setIsOrderDetailsOpened(false);
+    dispatch({ type: ORDER_RESET });
+    dispatch({ type: CONSTRUCTOR_RESET });
+    dispatch({ type: RESET_COUNT });
   };
 
   function openDetailOrder() {
@@ -72,22 +90,23 @@ export default function BurgerConstructor() {
     dispatch({ type: DECREASE_COUNT, item: { ...removeItem } });
   };
 
-  /* eslint-disable */ //TODO нет необходимсоти в зависимости от dispatch 
   const moveIngredients = useCallback((dragIndex, hoverIndex) => {
     dispatch({
       type: CONSTRUCTOR_REORDER,
       hoverIndex: hoverIndex,
       dragIndex: dragIndex,
     });
+    // eslint-disable-next-line
   }, []);
-  /* eslint-enable */
 
   const getTotalPrice = React.useMemo(() => {
     return `${
       (constructorBun ? constructorBun?.price : 0) * 2 +
-      (constructorIngredients ? constructorIngredients?.reduce((preItem, item) => {
-        return preItem + item.price;
-      }, 0) : 0)
+      (constructorIngredients
+        ? constructorIngredients?.reduce((preItem, item) => {
+            return preItem + item.price;
+          }, 0)
+        : 0)
     }`;
   }, [constructorBun, constructorIngredients]);
 
@@ -104,9 +123,8 @@ export default function BurgerConstructor() {
             <ul
               ref={dropIngredient}
               className={`${burgerConstructor.constructorBetweenBunsList} `}
-              style={{ border: "2, solid, blue" }}
             >
-              {!constructorIngredients && (
+              {!constructorIngredients?.length>0 && (
                 <li
                   className={
                     burgerConstructor.constructorIngredientsPlaceholder
@@ -145,16 +163,12 @@ export default function BurgerConstructor() {
           size="large"
           onClick={sendOrder}
           htmlType="button"
-          disabled={
-            !(constructorIngredients && constructorBun)
-              ? true
-              : false
-          }
+          disabled={!(constructorIngredients && constructorBun) ? true : false}
         >
           <p className="text text_type_main-small">Оформить заказ</p>
         </Button>
       </div>
-      {isOrderDetailsOpened && orderData?.success && (
+      {isOrderDetailsOpened && (
         <Modal closeAllModals={closeDetailOrder}>
           <OrderDetails orderInfo={constructorBun && orderData} />
         </Modal>
