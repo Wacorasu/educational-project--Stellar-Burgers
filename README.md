@@ -24,3 +24,5 @@
 - webpack
 - react-redux
 - react-dnd
+- react-router
+- web-socket
