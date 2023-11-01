@@ -1,5 +1,4 @@
 import { TResponseBody } from "../services/types";
-import { BURGER_API_URL } from "./api";
 import { request } from "./api";
 
 const getServerSingleOrder = (order: string): Promise<
@@ -23,7 +22,7 @@ const getServerSingleOrder = (order: string): Promise<
     }
   >
 > => {
-  return request(`${BURGER_API_URL}/orders/${order}`, {
+  return request(`${process.env.REACT_APP_BURGER_API_URL}/orders/${order}`, {
     method: "GET",
     mode: "cors",
     cache: "no-cache",

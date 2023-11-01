@@ -1,14 +1,14 @@
-import { BURGER_API_URL, request } from "./api";
-import { getCookie } from "./cookie-api";
-import type { TIngredientConstructor } from "../services/types/constructor.js";
-import type { TResponseBody } from "../services/types/index.js";
-import { TIngredientServer } from "../services/types/data.js";
+import { request } from './api';
+import { getCookie } from './cookie-api';
+import type { TIngredientConstructor } from '../services/types/constructor.js';
+import type { TResponseBody } from '../services/types/index.js';
+import { TIngredientServer } from '../services/types/data.js';
 
 const getOrder = (
   ingredients: Array<TIngredientConstructor>
 ): Promise<
   TResponseBody<
-    "order",
+    'order',
     {
       number: string;
       ingredients: Array<string>;
@@ -27,11 +27,11 @@ const getOrder = (
     }
   >
 > => {
-  return request(`${BURGER_API_URL}/orders`, {
-    method: "POST",
+  return request(`${process.env.REACT_APP_BURGER_API_URL}/orders`, {
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
-      authorization: "Bearer " + getCookie("accessToken"),
+      'Content-Type': 'application/json',
+      authorization: 'Bearer ' + getCookie('accessToken'),
     },
     body: JSON.stringify({
       ingredients: ingredients.map((item) => item._id),
@@ -40,9 +40,9 @@ const getOrder = (
 };
 
 const getServerData = (): Promise<
-  TResponseBody<"data", Array<TIngredientServer>>
+  TResponseBody<'data', Array<TIngredientServer>>
 > => {
-  return request(`${BURGER_API_URL}/ingredients`);
+  return request(`${process.env.REACT_APP_BURGER_API_URL}/ingredients`);
 };
 
 export { getOrder, getServerData };

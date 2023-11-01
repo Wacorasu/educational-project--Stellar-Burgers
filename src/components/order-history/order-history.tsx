@@ -2,7 +2,6 @@ import orderHistory from "./order-history.module.css";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "../../services/hooks";
 import { wsConnect, wsDisconnect } from "../../services/actions/user-orders";
-import { BURGER_API_URL_WS } from "../../utils/api";
 import { getCookie } from "../../utils/cookie-api";
 import { OrderCard } from "../order-card/order-card";
 import { useHistory, useLocation } from "react-router-dom";
@@ -36,7 +35,7 @@ export const OrderHistory = () => {
   useEffect(() => {
     dispatch(
       wsConnect(
-        `${BURGER_API_URL_WS}/orders?token=${getCookie("accessToken")}`,
+        `${process.env.REACT_APP_BURGER_API_URL_WS}/orders?token=${getCookie("accessToken")}`,
         wsActions
       )
     );

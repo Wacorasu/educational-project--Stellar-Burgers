@@ -1,5 +1,4 @@
 import { getCookie } from "./cookie-api";
-import { BURGER_API_URL } from "./api";
 import { request } from "./api";
 import type { TAuthEmail, TAuthFrom, TAuthPassword, TUserInfo } from "../services/types/auth";
 import type { TResponseBody } from "../services/types";
@@ -10,7 +9,7 @@ const getServerAuth = (
   form: TAuthFrom
 ): Promise<
   TResponseBody<"user", { name: string; email: string }>> => {
-  return request(`${BURGER_API_URL}/auth/login`, {
+  return request(`${process.env.REACT_APP_BURGER_API_URL}/auth/login`, {
     method: "POST",
     mode: "cors",
     cache: "no-cache",
@@ -26,7 +25,7 @@ const getServerAuth = (
 
 const getServerUser = () : Promise<
 TResponseBody<"user", { name: string; email: string }>>=>
-  request(`${BURGER_API_URL}/auth/user`, {
+  request(`${process.env.REACT_APP_BURGER_API_URL}/auth/user`, {
     method: "GET",
     mode: "cors",
     cache: "no-cache",
@@ -40,7 +39,7 @@ TResponseBody<"user", { name: string; email: string }>>=>
   });
 
 const getServerLogout = () : Promise <TResponseBody> => {
-  return request(`${BURGER_API_URL}/auth/logout`, {
+  return request(`${process.env.REACT_APP_BURGER_API_URL}/auth/logout`, {
     method: "POST",
     mode: "cors",
     cache: "no-cache",
@@ -57,7 +56,7 @@ const getServerLogout = () : Promise <TResponseBody> => {
 
 const getServerUpdateUser = (form: TUserInfo) : Promise<
 TResponseBody<"user", { name: string; email: string }>>=> {
-  return request(`${BURGER_API_URL}/auth/user`, {
+  return request(`${process.env.REACT_APP_BURGER_API_URL}/auth/user`, {
     method: "PATCH",
     mode: "cors",
     cache: "no-cache",
@@ -74,7 +73,7 @@ TResponseBody<"user", { name: string; email: string }>>=> {
 
 const getServerRegister = (form: TUserInfo) : Promise<
 TResponseBody<"user", { name: string; email: string }>>=> {
-  return request(`${BURGER_API_URL}/auth/register`, {
+  return request(`${process.env.REACT_APP_BURGER_API_URL}/auth/register`, {
     method: "POST",
     mode: "cors",
     cache: "no-cache",
@@ -89,7 +88,7 @@ TResponseBody<"user", { name: string; email: string }>>=> {
 };
 
 const getServerResetPassword = (form: TAuthEmail) : Promise <TResponseBody>=> {
-  return request(`${BURGER_API_URL}/password-reset`, {
+  return request(`${process.env.REACT_APP_BURGER_API_URL}/password-reset`, {
     method: "POST",
     mode: "cors",
     cache: "no-cache",
@@ -104,7 +103,7 @@ const getServerResetPassword = (form: TAuthEmail) : Promise <TResponseBody>=> {
 };
 
 const getServerNewPassword = (form: TAuthPassword): Promise <TResponseBody> => {
-  return request(`${BURGER_API_URL}/password-reset/reset`, {
+  return request(`${process.env.REACT_APP_BURGER_API_URL}/password-reset/reset`, {
     method: "POST",
     mode: "cors",
     cache: "no-cache",
@@ -120,7 +119,7 @@ const getServerNewPassword = (form: TAuthPassword): Promise <TResponseBody> => {
 
 const getServerRefreshToken = () : Promise<
 TResponseBody>=> {
-  return request(`${BURGER_API_URL}/auth/token`, {
+  return request(`${process.env.REACT_APP_BURGER_API_URL}/auth/token`, {
     method: "POST",
     mode: "cors",
     cache: "no-cache",
