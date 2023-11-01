@@ -1,8 +1,3 @@
-const BURGER_API_URL = "https://norma.nomoreparties.space/api";
-const BURGER_API_URL_WS = "wss://norma.nomoreparties.space";
-
-export { BURGER_API_URL, BURGER_API_URL_WS };
-
 const checkResponse = (res: {readonly headers: Headers;
   readonly ok: boolean;
   readonly redirected: boolean;

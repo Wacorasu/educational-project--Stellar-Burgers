@@ -2,7 +2,6 @@ import ordersFeed from "./orders-feed.module.css";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "../../services/hooks";
 import { wsConnect } from "../../services/actions/user-orders";
-import { BURGER_API_URL_WS } from "../../utils/api";
 import {OrderCard} from "../order-card/order-card";
 import { useHistory, useLocation } from "react-router-dom";
 import Spinner from "../spinner/spinner";
@@ -28,7 +27,7 @@ export const  OrdersFeed  = () => {
   };
 
   useEffect(() => {
-    dispatch(wsConnect(`${BURGER_API_URL_WS}/orders/all`, wsActions));
+    dispatch(wsConnect(`${process.env.REACT_APP_BURGER_API_URL_WS}/orders/all`, wsActions));
 
     // eslint-disable-next-line
   }, []);
